@@ -1,0 +1,357 @@
+@import url(https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap);
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body{
+    /* background: #e4e9f7 */
+    background: #fff;
+}
+
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 90vh;
+}
+
+.box{
+    /* background: #fdfdfd; */
+    display: flex;
+    flex-direction: column;
+    padding: 25px 0px;
+    border-radius: 20px;
+    /* box-shadow: 0 0 128px 0 rgba(0,0,0,0.1), 0 32px 64px -48px rgba(0,0,0,0.5); */
+}
+
+.form-box{
+    width: 450px;
+    margin: 0px 10px;
+}
+
+.form-box header{
+    font-size: 25px;
+    font-weight: 600;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e6e6e6;
+    margin-bottom: 10px;
+}
+
+.form-box form .field{
+    display: flex;
+    margin-bottom: 10px;
+    flex-direction: column;
+}
+
+.form-box form .input input{
+    height: 40px;
+    width: 100%;
+    font-size: 16px;
+    padding: 0 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+#googleSearch{
+    display: flex;
+    margin-bottom: 10px;
+    flex-direction: column;
+}
+
+#googleSearch input{
+    
+    height: 40px;
+    width: 30%;
+    font-size: 16px;
+    padding: 0 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+.btn{
+    height: 40px;                 
+    line-height: 40px;          
+    padding: 0 15px;              
+    display: inline-flex;          
+    align-items: center;          
+    justify-content: center;      
+    text-align: center;
+    font-size: 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    background: #B96913;
+    color: white;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.btn:hover{
+    /* opacity: 0.82; */
+    background-color: #c26e15;
+    transform: translateY(-2px);
+}
+
+.submit{
+    width: 100%;
+}
+
+.links{
+    margin-bottom: 15px;
+}
+
+/********* Home ************/
+.nav{
+    /* background: #fff; */
+    background: #e8871e;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    line-height: 60px;
+    z-index: 100;
+    box-shadow: 0 0 128px 0 rgba(0,0,0,0.5), 0 32px 64px -48px rgba(0,0,0,0.5);
+    /* box-shadow: 5px 10px; */
+}
+
+.logo{
+    /* font-size: 25px; */
+    font-size: 250%;
+    font-weight: 800;
+}
+
+.logo a{
+    text-decoration: none;
+    color: #000;
+}
+
+/* .right-links a{
+    padding: 0 10px;
+} */
+
+main{
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    /* margin-top: 60px; */
+    margin: 3%;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: -3%;
+    top: 3px;
+}
+
+.main-box{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+}
+.main-box .top{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.bottom{
+    width: 100%;
+    margin-top: 20%;
+}
+
+.box{
+    font-size: 200%;
+}
+
+@media only screen and (max-width: 840px){
+    .main-box .top{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .top  .box{
+        margin: 10px 10px;
+    }
+
+    .bottom{
+        margin-top: 0;
+    }
+}
+
+#suggestions{
+    /* border:1px solid #ccc; */
+    display:none;
+    max-height: 150px;
+    overflow-y:auto;
+    background: #fff;
+    /* border-radius: 10px; */
+}
+
+#postForm{
+    /* background-color: #e8871e; */
+    background-color: #fff;
+    border-radius: 20px;
+    width: 70%; /*30%*/
+    margin: auto;
+    padding: 15px;
+    box-shadow: 0 0 128px 0 rgba(0,0,0,0.1), 0 32px 64px -48px rgba(0,0,0,0.5);
+}
+
+.userInpPost{
+    display: block;
+    /* margin: auto; */
+}
+
+.userInpPostGroup{
+    display: flex;
+    margin-bottom: 10px;
+    flex-direction: column;
+    margin: 8px;
+}
+
+.userInpPostGroup input{
+    height: 40px;
+    width: 100%;
+    font-size: 16px;
+    padding: 0 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    outline: none
+}
+
+#skillLevel{
+    height: 40px;
+    width: 100%;
+    font-size: 16px;
+    padding: 0 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    outline: none
+}
+
+#ageRange{
+    height: 40px;
+    width: 100%;
+    font-size: 16px;
+    padding: 0 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    outline: none
+}
+
+.dim{
+    background: rgba(0,0,0,0.7);
+}
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* dim background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.popup-card {
+    background-color: #fdfdfd;
+    padding: 30px 25px;
+    border-radius: 15px;
+    width: 400px;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.2);
+    /* animation: fadeIn 0.3s ease-out; */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+
+
+/* .viewPosts {
+    margin: auto;
+    width: 85%;
+    display: flex;
+}
+
+.postCard {
+    background: #e8871e;
+    border-radius: 20px;
+    padding: 20px;
+    width: 23%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 220px;
+    box-sizing: border-box;
+} */
+
+.viewPosts {
+    margin: auto;
+    width: 90%;
+}
+
+.viewPostCards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1%;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.viewPostCards a{
+    color: black;
+}
+
+.postCard {
+    /* background: #e8871e; */
+    background: #fff;
+    border-radius: 20px;
+    padding: 20px;
+    /* width: 23%; */
+    width: 80%;
+    display: inline-grid;
+    /* display: -webkit-inline-box; */
+    flex-direction: column;
+    /* justify-content: space-between; */
+    min-height: 220px;
+    box-sizing: border-box;
+    margin: 0.3%;
+}
+
+.postImage{
+    /* margin-top: 2%; */
+    width: 55%;
+    height: 25vh;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.innerText{
+    color: #858585;
+    font-size: .9em;
+}
+
+a.innerText,
+a.innerText:visited,
+a.innerText:active,
+a.innerText:hover {
+    color: #858585;
+}
+
+h3{
+    font-size: 1.5em;
+}
+
+#testRightSide{
+    background: #e8871e;
+}
