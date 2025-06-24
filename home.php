@@ -227,9 +227,9 @@ if (isset($_POST['attendEvent'])) {
             $mail->setFrom("spand0225@gmail.com", "TeamUp Team"); //whatever email the user inputs is the email it sends from
             $mail->addAddress("$email", $name); //recipient
             
-            $mail->Subject = "Attendance Confirmation - " . $date . " - " . $sport;
+            $mail->Subject = "Participant Added - " . $date . " - " . $sport;
             // $mail->Body = "Hey $name,\nJust wanted to let you know that you're confirmed to attend $sport on $date from $time to $end_time!\nPlayers: $combined, \n\nHave fun,\nTeamUp Team";
-            $mail->Body = "Hey $name, \nJust wanted to let you know that you're confirmed to attend $sport on $date from $time to $end_time!\nPlayers: $combined\n\nHave fun,\nTeamUp Team";
+            $mail->Body = "Hey $name, \nJust wanted to let you know that a new participant has confirmed to attend $sport on $date from $time to $end_time at $location!\nPlayers: $combined\n\nHave fun,\nTeamUp Team";
             
             $mail->send();
             

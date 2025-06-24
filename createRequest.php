@@ -100,8 +100,8 @@ if (strtotime($datetime) >= strtotime($today)){
         $mail->setFrom("spand0225@gmail.com", "TeamUp Team"); //whatever email the user inputs is the email it sends from
         $mail->addAddress("$email", $name); //recipient
         
-        $mail->Subject = "Attendance Confirmation - " . $date . " - " . $sport;
-        $mail->Body = "Hey $name,\nJust wanted to let you know that you're confirmed to attend $sport on $date from $time to $end_time!\n\nTeamUp Team";
+        $mail->Subject = "Event Created - " . $date . " - " . $sport;
+        $mail->Body = "Hey $name,\nJust wanted to let you know that your event for $sport on $date from $time to $end_time at $location has been created successfully!\n\nHave fun,\nTeamUp Team";
         
         $mail->send();
         
