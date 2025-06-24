@@ -1,5 +1,6 @@
 <?php
-
+use PHPMailer\PHPMailer\PhpMailer;
+use PHPMailer\PHPMailer\SMTP;
 
 session_start();
 
@@ -51,6 +52,62 @@ if (strtotime($datetime) >= strtotime($today)){
         // echo $datetime;
         // echo "<br>";
         // echo $today;
+
+        $emailQuery = $conn->prepare("SELECT Email from users WHERE Id = ?");
+        $emailQuery->bind_param("i", $user_id);
+        $emailQuery->execute();
+        $emailResult = $emailQuery->get_result();
+        if ($emailResult->num_rows > 0){
+            $userData = $emailResult->fetch_assoc();
+            $email = $userData['Email'];
+        }
+        $emailQuery->close();
+
+        $nameQuery = $conn->prepare("SELECT Username from users WHERE Id = ?");
+        $nameQuery->bind_param("i", $user_id);
+        $nameQuery->execute();
+        $nameResult = $nameQuery->get_result();
+        if ($nameResult->num_rows > 0){
+            $userData = $nameResult->fetch_assoc();
+            $name = $userData['Username'];
+        }
+        $nameQuery->close();
+
+
+
+
+
+
+        // $name = "Svar";
+        // $email = $_POST['email'];
+        
+        require "vendor/autoload.php";
+        
+        
+        
+        $mail = new PHPMailer(true);
+        
+        $mail->isSMTP();
+        $mail->SMTPAuth = true;
+        
+        $mail->Host = "smtp.gmail.com";
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
+        
+        $mail->Username = "spand0225@gmail.com";
+        $mail->Password = "kkzm ymho mhys fsfq";
+        
+        $mail->setFrom("spand0225@gmail.com", "TeamUp Team"); //whatever email the user inputs is the email it sends from
+        $mail->addAddress("$email", $name); //recipient
+        
+        $mail->Subject = "Attendance Confirmation - " . $date . " - " . $sport;
+        $mail->Body = "Hey $name,\nJust wanted to let you know that you're confirmed to attend $sport on $date from $time to $end_time!\n-TeamUp Team";
+        
+        $mail->send();
+        
+        header("Location: createRequest.php");
+
+        
     } else {
         // echo "<p style='color: red;'>Error: " . $stmt->error . "</p>";
         echo "<script>alert('Error: ', " . $stmt->error . ")</script>";

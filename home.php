@@ -1,7 +1,6 @@
 <?php
-use MailerSend\MailerSend;
-use MailerSend\Helpers\Builder\Recipient;
-use MailerSend\Helpers\Builder\EmailParams;
+use PHPMailer\PHPMailer\PhpMailer;
+use PHPMailer\PHPMailer\SMTP;
     session_start();
 
     include("php/config.php");
@@ -110,6 +109,72 @@ if (isset($_POST['attendEvent'])) {
         $insert->close();
 
         // Then decrement people_needed and delete if needed (as you already do)
+
+
+
+        $emailQuery = $conn->prepare("SELECT Email from users WHERE Id = ?");
+        $emailQuery->bind_param("i", $userId);
+        $emailQuery->execute();
+        $emailResult = $emailQuery->get_result();
+        if ($emailResult->num_rows > 0){
+            $userData = $emailResult->fetch_assoc();
+            $email = $userData['Email'];
+        }
+        $emailQuery->close();
+
+        $nameQuery = $conn->prepare("SELECT Username from users WHERE Id = ?");
+        $nameQuery->bind_param("i", $userId);
+        $nameQuery->execute();
+        $nameResult = $nameQuery->get_result();
+        if ($nameResult->num_rows > 0){
+            $userData = $nameResult->fetch_assoc();
+            $name = $userData['Username'];
+        }
+        $nameQuery->close();
+
+
+
+
+        $dateQuery = $conn->prepare("SELECT * FROM requests WHERE id = ?");
+        $dateQuery->bind_param("i", $requestId);
+        $dateQuery->execute();
+        $dateResult = $dateQuery->get_result();
+        if ($dateResult->num_rows > 0){
+            $eventData = $dateResult->fetch_assoc();
+            $date = $eventData['date'];
+            $time = $eventData['time'];
+            $end_time = $eventData['end_time'];
+            $sport = $eventData['sport'];
+        }
+
+
+
+
+        require "vendor/autoload.php";
+        
+        
+        
+        $mail = new PHPMailer(true);
+        
+        $mail->isSMTP();
+        $mail->SMTPAuth = true;
+        
+        $mail->Host = "smtp.gmail.com";
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
+        
+        $mail->Username = "spand0225@gmail.com";
+        $mail->Password = "kkzm ymho mhys fsfq";
+        
+        $mail->setFrom("spand0225@gmail.com", "TeamUp Team"); //whatever email the user inputs is the email it sends from
+        $mail->addAddress("$email", $name); //recipient
+        
+        $mail->Subject = "Attendance Confirmation - " . $date . " - " . $sport;
+        $mail->Body = "Hey $name,\nJust wanted to let you know that you're confirmed to attend $sport on $date from $time to $end_time!\n-TeamUp Team";
+        
+        $mail->send();
+        
+        header("Location: home.php");
     } 
     // else {
     //     echo "<script>alert('You are already attending this event.')</script>";
@@ -117,6 +182,11 @@ if (isset($_POST['attendEvent'])) {
 
     $check->close();
 }
+
+
+
+
+
 
 
 
@@ -356,8 +426,6 @@ if (isset($_POST['attendEvent'])) {
                 }
 
 
-                // mailersend token: mlsn.8ec2d63e15de1b40a18cfad5c4cf68e6a09c0172005bd9e4e400198c551cdbee
-                
             ?>
             </div>
         </div>
