@@ -101,13 +101,13 @@ if (strtotime($datetime) >= strtotime($today)){
         $mail->addAddress("$email", $name); //recipient
         
         $mail->Subject = "Attendance Confirmation - " . $date . " - " . $sport;
-        $mail->Body = "Hey $name,\nJust wanted to let you know that you're confirmed to attend $sport on $date from $time to $end_time!\n-TeamUp Team";
+        $mail->Body = "Hey $name,\nJust wanted to let you know that you're confirmed to attend $sport on $date from $time to $end_time!\n\nTeamUp Team";
         
         $mail->send();
         
         header("Location: createRequest.php");
 
-        
+
     } else {
         // echo "<p style='color: red;'>Error: " . $stmt->error . "</p>";
         echo "<script>alert('Error: ', " . $stmt->error . ")</script>";

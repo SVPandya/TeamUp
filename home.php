@@ -96,6 +96,13 @@ if (isset($_POST['attendEvent'])) {
     $requestId = $_POST['requestId'];
     $userId = $_SESSION['id'];
 
+
+
+
+
+
+
+
     // Insert into attendances table
     $check = $conn->prepare("SELECT * FROM attendances WHERE user_id = ? AND request_id = ?");
     $check->bind_param("ii", $userId, $requestId);
@@ -112,70 +119,123 @@ if (isset($_POST['attendEvent'])) {
 
 
 
-        $emailQuery = $conn->prepare("SELECT Email from users WHERE Id = ?");
-        $emailQuery->bind_param("i", $userId);
-        $emailQuery->execute();
-        $emailResult = $emailQuery->get_result();
-        if ($emailResult->num_rows > 0){
-            $userData = $emailResult->fetch_assoc();
-            $email = $userData['Email'];
+
+
+
+        $playersQuery = mysqli_query($conn, "SELECT u.Username, u.Phone_Num FROM attendances a JOIN users u 
+        ON a.user_id = u.Id WHERE a.request_id = '$requestId'");
+
+        while ($player = mysqli_fetch_assoc($playersQuery)){
+            $playerNames[] = htmlspecialchars($player['Username']);
+            // $playerPhoneNums[] = htmlspecialchars($player['Phone_Num']);
+            $strLength = (string)$player['Phone_Num'];
+            if ((strlen($strLength) === 10)){
+                $firstThree = substr($player['Phone_Num'], 0, 3);
+                $secondThree = substr($player['Phone_Num'], 3, 3);
+                $lastFour = substr($player['Phone_Num'], 6, 4);
+                $playerPhoneNums[] = htmlspecialchars($firstThree . "-" . $secondThree . "-" . $lastFour);
+                
+            }
+            else{
+                $playerPhoneNums[] = htmlspecialchars($player['Phone_Num']);
+            }
         }
-        $emailQuery->close();
-
-        $nameQuery = $conn->prepare("SELECT Username from users WHERE Id = ?");
-        $nameQuery->bind_param("i", $userId);
-        $nameQuery->execute();
-        $nameResult = $nameQuery->get_result();
-        if ($nameResult->num_rows > 0){
-            $userData = $nameResult->fetch_assoc();
-            $name = $userData['Username'];
+        // echo "<p class='innerText'>Players: " . implode(", ", $playerNames) . implode(", ", $playerPhoneNums) . "</p>";
+        $combined = "";
+        for ($i = 0; $i < count($playerNames)-1; $i++){
+            $combined .= $playerNames[$i] . " (" . $playerPhoneNums[$i] . ")・";
+            // echo "<script>console.log('Combined: " . $combined . "' );</script>";
         }
-        $nameQuery->close();
+        $combined .= $playerNames[count($playerNames)-1] . " (" . $playerPhoneNums[count($playerNames)-1] . ")";
+        // echo "<script>console.log('Final Combined: " . $combined . "' );</script>";
+        
+    
 
 
 
 
-        $dateQuery = $conn->prepare("SELECT * FROM requests WHERE id = ?");
-        $dateQuery->bind_param("i", $requestId);
-        $dateQuery->execute();
-        $dateResult = $dateQuery->get_result();
-        if ($dateResult->num_rows > 0){
-            $eventData = $dateResult->fetch_assoc();
-            $date = $eventData['date'];
-            $time = $eventData['time'];
-            $end_time = $eventData['end_time'];
-            $sport = $eventData['sport'];
+
+
+
+
+
+
+
+        //Change this so it does it sends an email to everyone signed up in attendances per that request_id
+        $allUsersQuery = $conn->prepare("SELECT user_id FROM attendances WHERE request_id = ?");
+        $allUsersQuery->bind_param("i", $requestId);
+        $allUsersQuery->execute();
+        $allUsersResult = $allUsersQuery->get_result();
+        while ($row = $allUsersResult->fetch_assoc()){
+            $userId = $row['user_id'];
+
+
+            $emailQuery = $conn->prepare("SELECT Email from users WHERE Id = ?");
+            $emailQuery->bind_param("i", $userId);
+            $emailQuery->execute();
+            $emailResult = $emailQuery->get_result();
+            if ($emailResult->num_rows > 0){
+                $userData = $emailResult->fetch_assoc();
+                $email = $userData['Email'];
+            }
+            $emailQuery->close();
+    
+            $nameQuery = $conn->prepare("SELECT Username from users WHERE Id = ?");
+            $nameQuery->bind_param("i", $userId);
+            $nameQuery->execute();
+            $nameResult = $nameQuery->get_result();
+            if ($nameResult->num_rows > 0){
+                $userData = $nameResult->fetch_assoc();
+                $name = $userData['Username'];
+            }
+            $nameQuery->close();
+    
+    
+    
+    
+            $dateQuery = $conn->prepare("SELECT * FROM requests WHERE id = ?");
+            $dateQuery->bind_param("i", $requestId);
+            $dateQuery->execute();
+            $dateResult = $dateQuery->get_result();
+            if ($dateResult->num_rows > 0){
+                $eventData = $dateResult->fetch_assoc();
+                $date = $eventData['date'];
+                $time = $eventData['time'];
+                $end_time = $eventData['end_time'];
+                $sport = $eventData['sport'];
+            }
+    
+    
+    
+    
+            require "vendor/autoload.php";
+            
+            
+            
+            $mail = new PHPMailer(true);
+            
+            $mail->isSMTP();
+            $mail->SMTPAuth = true;
+            
+            $mail->Host = "smtp.gmail.com";
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+            
+            $mail->Username = "spand0225@gmail.com";
+            $mail->Password = "kkzm ymho mhys fsfq";
+            
+            $mail->setFrom("spand0225@gmail.com", "TeamUp Team"); //whatever email the user inputs is the email it sends from
+            $mail->addAddress("$email", $name); //recipient
+            
+            $mail->Subject = "Attendance Confirmation - " . $date . " - " . $sport;
+            // $mail->Body = "Hey $name,\nJust wanted to let you know that you're confirmed to attend $sport on $date from $time to $end_time!\nPlayers: $combined, \n\nHave fun,\nTeamUp Team";
+            $mail->Body = "Hey $name, \nJust wanted to let you know that you're confirmed to attend $sport on $date from $time to $end_time!\nPlayers: $combined\n\nHave fun,\nTeamUp Team";
+            
+            $mail->send();
+            
+            // header("Location: home.php"); //Uncomment to return to the home page after submittng and avoid form resubmission
         }
-
-
-
-
-        require "vendor/autoload.php";
-        
-        
-        
-        $mail = new PHPMailer(true);
-        
-        $mail->isSMTP();
-        $mail->SMTPAuth = true;
-        
-        $mail->Host = "smtp.gmail.com";
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
-        
-        $mail->Username = "spand0225@gmail.com";
-        $mail->Password = "kkzm ymho mhys fsfq";
-        
-        $mail->setFrom("spand0225@gmail.com", "TeamUp Team"); //whatever email the user inputs is the email it sends from
-        $mail->addAddress("$email", $name); //recipient
-        
-        $mail->Subject = "Attendance Confirmation - " . $date . " - " . $sport;
-        $mail->Body = "Hey $name,\nJust wanted to let you know that you're confirmed to attend $sport on $date from $time to $end_time!\n-TeamUp Team";
-        
-        $mail->send();
-        
-        header("Location: home.php");
-    } 
+        } 
     // else {
     //     echo "<script>alert('You are already attending this event.')</script>";
     // }
@@ -426,6 +486,8 @@ if (isset($_POST['attendEvent'])) {
                 }
 
 
+                // mailersend token: mlsn.8ec2d63e15de1b40a18cfad5c4cf68e6a09c0172005bd9e4e400198c551cdbee
+                
             ?>
             </div>
         </div>
