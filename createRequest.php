@@ -75,15 +75,13 @@ if (strtotime($datetime) >= strtotime($today)){
 
 
 
-
-
-
-        // $name = "Svar";
-        // $email = $_POST['email'];
         
         require "vendor/autoload.php";
         
         
+        $date = date("F j, Y", strtotime($date));
+        $time = date("g:i A", strtotime($time));
+        $end_time = date("g:i A", strtotime($end_time));
         
         $mail = new PHPMailer(true);
         
@@ -97,11 +95,11 @@ if (strtotime($datetime) >= strtotime($today)){
         $mail->Username = "spand0225@gmail.com";
         $mail->Password = "kkzm ymho mhys fsfq";
         
-        $mail->setFrom("spand0225@gmail.com", "TeamUp Team"); //whatever email the user inputs is the email it sends from
+        $mail->setFrom("spand0225@gmail.com", "TeamUp Team");
         $mail->addAddress("$email", $name); //recipient
         
         $mail->Subject = "Event Created - " . $date . " - " . $sport;
-        $mail->Body = "Hey $name,\nJust wanted to let you know that your event for $sport on $date from $time to $end_time at $location has been created successfully!\n\nHave fun,\nTeamUp Team";
+        $mail->Body = "Hey $name,\n\nJust wanted to let you know that your event for $sport on $date from $time to $end_time at $location has been created successfully!\n\nHave fun,\nTeamUp Team";
         
         $mail->send();
         
@@ -109,7 +107,6 @@ if (strtotime($datetime) >= strtotime($today)){
 
 
     } else {
-        // echo "<p style='color: red;'>Error: " . $stmt->error . "</p>";
         echo "<script>alert('Error: ', " . $stmt->error . ")</script>";
     }
     $stmt->close();

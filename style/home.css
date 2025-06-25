@@ -1,24 +1,25 @@
 @import url(https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap);
-*{
+
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
 
-body{
+body {
     /* background: #e4e9f7 */
     background: #fff;
 }
 
-.container{
+.container {
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 90vh;
 }
 
-.box{
+.box {
     /* background: #fdfdfd; */
     display: flex;
     flex-direction: column;
@@ -27,12 +28,12 @@ body{
     /* box-shadow: 0 0 128px 0 rgba(0,0,0,0.1), 0 32px 64px -48px rgba(0,0,0,0.5); */
 }
 
-.form-box{
+.form-box {
     width: 450px;
     margin: 0px 10px;
 }
 
-.form-box header{
+.form-box header {
     font-size: 25px;
     font-weight: 600;
     padding-bottom: 10px;
@@ -40,13 +41,13 @@ body{
     margin-bottom: 10px;
 }
 
-.form-box form .field{
+.form-box form .field {
     display: flex;
     margin-bottom: 10px;
     flex-direction: column;
 }
 
-.form-box form .input input{
+.form-box form .input input {
     height: 40px;
     width: 100%;
     font-size: 16px;
@@ -56,14 +57,14 @@ body{
     outline: none;
 }
 
-#googleSearch{
+#googleSearch {
     display: flex;
     margin-bottom: 10px;
     flex-direction: column;
 }
 
-#googleSearch input{
-    
+#googleSearch input {
+
     height: 40px;
     width: 30%;
     font-size: 16px;
@@ -73,13 +74,13 @@ body{
     outline: none;
 }
 
-.btn{
-    height: 40px;                 
-    line-height: 40px;          
-    padding: 0 15px;              
-    display: inline-flex;          
-    align-items: center;          
-    justify-content: center;      
+.btn {
+    height: 40px;
+    line-height: 40px;
+    padding: 0 15px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     font-size: 15px;
     text-decoration: none;
@@ -92,22 +93,22 @@ body{
     box-sizing: border-box;
 }
 
-.btn:hover{
+.btn:hover {
     /* opacity: 0.82; */
     background-color: #c26e15;
     transform: translateY(-2px);
 }
 
-.submit{
+.submit {
     width: 100%;
 }
 
-.links{
+.links {
     margin-bottom: 15px;
 }
 
 /********* Home ************/
-.nav{
+.nav {
     /* background: #fff; */
     background: #e8871e;
     display: flex;
@@ -115,17 +116,17 @@ body{
     justify-content: space-around;
     line-height: 60px;
     z-index: 100;
-    box-shadow: 0 0 128px 0 rgba(0,0,0,0.5), 0 32px 64px -48px rgba(0,0,0,0.5);
+    box-shadow: 0 0 128px 0 rgba(0, 0, 0, 0.5), 0 32px 64px -48px rgba(0, 0, 0, 0.5);
     /* box-shadow: 5px 10px; */
 }
 
-.logo{
+.logo {
     /* font-size: 25px; */
     font-size: 250%;
     font-weight: 800;
 }
 
-.logo a{
+.logo a {
     text-decoration: none;
     color: #000;
 }
@@ -134,7 +135,7 @@ body{
     padding: 0 10px;
 } */
 
-main{
+main {
     /* display: flex; */
     align-items: center;
     justify-content: center;
@@ -147,74 +148,76 @@ main{
     top: 3px;
 }
 
-.main-box{
+.main-box {
     display: flex;
     flex-direction: column;
-    width: 70%;
+    /* width: 70%; */
 }
-.main-box .top{
+
+.main-box .top {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.bottom{
+.bottom {
     width: 100%;
     margin-top: 20%;
 }
 
-.box{
+.box {
     font-size: 200%;
 }
 
-@media only screen and (max-width: 840px){
-    .main-box .top{
+@media only screen and (max-width: 840px) {
+    .main-box .top {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
     }
 
-    .top  .box{
+    .top .box {
         margin: 10px 10px;
     }
 
-    .bottom{
+    .bottom {
         margin-top: 0;
     }
 }
 
-#suggestions{
+#suggestions {
     /* border:1px solid #ccc; */
-    display:none;
+    display: none;
     max-height: 150px;
-    overflow-y:auto;
+    overflow-y: auto;
     background: #fff;
     /* border-radius: 10px; */
 }
 
-#postForm{
+#postForm {
     /* background-color: #e8871e; */
     background-color: #fff;
     border-radius: 20px;
-    width: 70%; /*30%*/
+    width: 70%;
+    /*30%*/
     margin: auto;
     padding: 15px;
-    box-shadow: 0 0 128px 0 rgba(0,0,0,0.1), 0 32px 64px -48px rgba(0,0,0,0.5);
+    box-shadow: 0 0 128px 0 rgba(0, 0, 0, 0.1), 0 32px 64px -48px rgba(0, 0, 0, 0.5);
 }
 
-.userInpPost{
+.userInpPost {
     display: block;
     /* margin: auto; */
 }
 
-.userInpPostGroup{
+.userInpPostGroup {
     display: flex;
     margin-bottom: 10px;
     flex-direction: column;
     margin: 8px;
 }
 
-.userInpPostGroup input{
+.userInpPostGroup input {
     height: 40px;
     width: 100%;
     font-size: 16px;
@@ -224,7 +227,7 @@ main{
     outline: none
 }
 
-#skillLevel{
+#skillLevel {
     height: 40px;
     width: 100%;
     font-size: 16px;
@@ -234,7 +237,7 @@ main{
     outline: none
 }
 
-#ageRange{
+#ageRange {
     height: 40px;
     width: 100%;
     font-size: 16px;
@@ -244,8 +247,8 @@ main{
     outline: none
 }
 
-.dim{
-    background: rgba(0,0,0,0.7);
+.dim {
+    background: rgba(0, 0, 0, 0.7);
 }
 
 .popup-overlay {
@@ -254,7 +257,8 @@ main{
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6); /* dim background */
+    background: rgba(0, 0, 0, 0.6);
+    /* dim background */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -271,8 +275,15 @@ main{
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 
@@ -308,7 +319,7 @@ main{
     margin-top: 10px;
 }
 
-.viewPostCards a{
+.viewPostCards a {
     color: black;
 }
 
@@ -328,7 +339,7 @@ main{
     margin: 0.3%;
 }
 
-.postImage{
+.postImage {
     /* margin-top: 2%; */
     width: 55%;
     height: 25vh;
@@ -336,7 +347,7 @@ main{
     border-radius: 15px;
 }
 
-.innerText{
+.innerText {
     color: #858585;
     font-size: .9em;
 }
@@ -348,10 +359,10 @@ a.innerText:hover {
     color: #858585;
 }
 
-h3{
+h3 {
     font-size: 1.5em;
 }
 
-#testRightSide{
+#testRightSide {
     background: #e8871e;
 }

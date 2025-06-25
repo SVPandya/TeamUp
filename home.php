@@ -199,10 +199,14 @@ if (isset($_POST['attendEvent'])) {
             $dateResult = $dateQuery->get_result();
             if ($dateResult->num_rows > 0){
                 $eventData = $dateResult->fetch_assoc();
-                $date = $eventData['date'];
-                $time = $eventData['time'];
-                $end_time = $eventData['end_time'];
+                // $date = $eventData['date'];
+                $date = date("F j, Y", strtotime($eventData['date']));
+                // $time = $eventData['time'];
+                // $end_time = $eventData['end_time'];
+                $time = date("g:i A", strtotime($eventData['time']));
+                $end_time = date("g:i A", strtotime($eventData['end_time']));
                 $sport = $eventData['sport'];
+                $location = $eventData['location'];
             }
     
     
@@ -229,11 +233,11 @@ if (isset($_POST['attendEvent'])) {
             
             $mail->Subject = "Participant Added - " . $date . " - " . $sport;
             // $mail->Body = "Hey $name,\nJust wanted to let you know that you're confirmed to attend $sport on $date from $time to $end_time!\nPlayers: $combined, \n\nHave fun,\nTeamUp Team";
-            $mail->Body = "Hey $name, \nJust wanted to let you know that a new participant has confirmed to attend $sport on $date from $time to $end_time at $location!\nPlayers: $combined\n\nHave fun,\nTeamUp Team";
+            $mail->Body = "Hey $name,\n\nJust wanted to let you know that a new participant has confirmed to attend $sport on $date from $time to $end_time at $location!\nPlayers: $combined\n\nHave fun,\nTeamUp Team";
             
             $mail->send();
             
-            // header("Location: home.php"); //Uncomment to return to the home page after submittng and avoid form resubmission
+            header("Location: home.php");
         }
         } 
     // else {
@@ -310,7 +314,8 @@ if (isset($_POST['attendEvent'])) {
     <main id="mainCont">
         <div class="main-box top">
                 <div class="box">
-                    <p style="margin: 0 3%;"><b>Welcome back <?php echo $res_Uname?>!</b></p>
+                    <!-- <p style="margin: 0 3%;"><b>Welcome back <?php echo $res_Uname?>!</b></p> -->
+                    <p style="width: 90%; margin: auto;"><b>Welcome back <?php echo $res_Uname?>!</b></p>
                 </div>
                 <!-- <div class="box">
                     <p>Your email is <b><?php echo $res_Email?></b></p>

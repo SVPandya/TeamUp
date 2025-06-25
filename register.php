@@ -24,6 +24,9 @@
         <div class="box form-box">
 
             <?php
+
+                // use PHPMailer\PHPMailer\PhpMailer;
+                // use PHPMailer\PHPMailer\SMTP;
             
                 include("php/config.php");
                 if (isset($_POST['submit'])){
@@ -56,6 +59,27 @@
                         <p>Registration successful</p>
                         </div> <br>";
                         echo "<a href='index.php'><button class='btn'>Login Now</button></a>";
+
+                        // require "vendor/autoload.php";
+                        // $mail = new PHPMailer(true);
+                        
+                        // $mail->isSMTP();
+                        // $mail->SMTPAuth = true;
+                        
+                        // $mail->Host = "smtp.gmail.com";
+                        // $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                        // $mail->Port = 587;
+                        
+                        // $mail->Username = "spand0225@gmail.com";
+                        // $mail->Password = "kkzm ymho mhys fsfq";
+                        
+                        // $mail->setFrom("spand0225@gmail.com", "TeamUp Team"); //whatever email the user inputs is the email it sends from
+                        // $mail->addAddress("$email", $username); //recipient
+                        
+                        // $mail->Subject = "TeamUp Sign Up";
+                        // $mail->Body = "Hey $username,\n\nThanks for signing up for TeamUp!\n\nHave fun,\nTeamUp Team";
+                        
+                        // $mail->send();
                     }
                 }
                 else{
