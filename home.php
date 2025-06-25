@@ -315,7 +315,7 @@ if (isset($_POST['attendEvent'])) {
         <div class="main-box top">
                 <div class="box">
                     <!-- <p style="margin: 0 3%;"><b>Welcome back <?php echo $res_Uname?>!</b></p> -->
-                    <p style="width: 90%; margin: auto;"><b>Welcome back <?php echo $res_Uname?>!</b></p>
+                    <p style="width: 90%; margin: auto;"><b>Welcome back, <?php echo $res_Uname?>!</b></p>
                 </div>
                 <!-- <div class="box">
                     <p>Your email is <b><?php echo $res_Email?></b></p>
