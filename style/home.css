@@ -269,7 +269,7 @@ main {
     background-color: #fdfdfd;
     padding: 30px 25px;
     border-radius: 15px;
-    width: 400px;
+    /* width: 400px; */
     box-shadow: 0 10px 50px rgba(0, 0, 0, 0.2);
     /* animation: fadeIn 0.3s ease-out; */
 }

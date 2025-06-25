@@ -254,6 +254,7 @@ else{
                         
                         <table style="width: 100%;">
                             <tr style="width: 100%;">
+                                <!-- style="width: 100%;" -->
                                 <td style="width: 33%;">
                                     <div class="userInpPostGroup">
                                         <label for="date">Date</label>
