@@ -156,11 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-    document.getElementById("date").addEventListener("change", function (e) {
-        selectedDate = e.target.value;
-        console.log("Date changed");
-        tryFetchWeather(); // Call again when date changes
-    });
+
 
 
 });
@@ -306,6 +302,8 @@ function tryFetchWeather() {
                 //     console.log("No forecast data for this date.");
                 //     return;
                 // }
+                const dailyWeather = document.querySelector("#hourlyWeather");
+                dailyWeather.innerHTML = "";
 
                 days.forEach((day, index) => {
                     const date = day.displayDate.month + "/" + day.displayDate.day;
@@ -330,7 +328,7 @@ function tryFetchWeather() {
 
                     console.log(`Temperature: ${minTemp} - ${maxTemp}°F`);
                     console.log(`Precipitation Chance: ${precip}%`);
-                    var dailyWeather = document.querySelector("#hourlyWeather");
+
                     const gif = document.createElement('img');
                     gif.src = 'icons8-sun.gif';
                     if (precip >= 30) {

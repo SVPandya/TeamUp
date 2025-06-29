@@ -2,6 +2,14 @@
 use PHPMailer\PHPMailer\PhpMailer;
 use PHPMailer\PHPMailer\SMTP;
 
+require_once __DIR__ . '/vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+$apiKey = $_ENV['GOOGLE_API_KEY'];
+
+
 session_start();
 
 include("php/config.php");
@@ -125,7 +133,7 @@ else{
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Event | TeamUp</title>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuy24KIJyJtG01xMGEFhwMJiRadDjFxeM&libraries=places"
+    <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $apiKey ?>&libraries=places"
         defer></script>
     <link rel="stylesheet" href="style/home.css">
     <link rel="icon" type="image/png" href="favicons.png">

@@ -85,11 +85,3 @@
     </div>
 </body>
 </html>
-
-<!--
-Ideas to add more Google Maps API features:
-- Have a heatmap of high activity places on the actual Google Maps
-- Virtual Venue explorer (3D) EDIT: NOT POSSIBLE SINCE GOOGLE MAPS DOESN'T GO ON THE ACTUAL COURTS/FIELDS (withh satellite)
-- Real-time weather overlay (alerts you and can help cancel and event if the user decides based on weather) (show current and 
-  forecasted weather when creating an event and shows the forecasted weather for other who may be looking to sign up)
--->
