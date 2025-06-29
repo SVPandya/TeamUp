@@ -275,6 +275,8 @@ else{
                                 </td>
                             </tr>
                         </table>
+
+                        <ul id="hourlyWeather"></ul>
                     
                         
                         <div class="userInpPostGroup">
@@ -319,7 +321,7 @@ else{
             </form>
         </div>
         </td>
-        <td style="width: 50%; height: 100%; background: #e8871e; z-index: 10;">
+        <td style="width: 50%; height: 100%; background: #e8871e; z-index: 10;" id="right">
             <!-- <div id="testRightSide">fd</div> -->
         </td>
         </tr>
