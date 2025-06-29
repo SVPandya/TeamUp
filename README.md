@@ -1,4 +1,8 @@
 # TeamUp
+After downloading this repository, create a `.env` file in the base directory and add the following code:
+
+`GOOGLE_API_KEY = {API KEY}`
+
 ## Package Installation (Windows)
 Navigate to the C: drive and run to install Composer:
 
