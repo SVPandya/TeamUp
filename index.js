@@ -202,13 +202,89 @@ function closePostForm() {
 
 
 
+// FOR HOURLY FORECASTS
+// function tryFetchWeather() {
+//     if (!selectedLat || !selectedLng || !selectedDate) {
+//         // if (!selectedLat || !selectedLng) {
+//         console.log("still null");
+//         console.log(`selectedLat: ${selectedLat}`);
+//         console.log(`selectedLng: ${selectedLng}`);
+//         console.log(`selectedDate: ${selectedDate}`);
+//         return;
+//     }
+//     console.log('not if');
+//     fetch(`weatherProxy.php?lat=${selectedLat}&lng=${selectedLng}`)
+//         .then(res => res.json())
+//         .then(data => {
+//             // console.log("Status Code:", data.status);
+//             // console.log("Weather Response:", data.response);
 
+
+//             const hours = data.response.forecastHours;
+
+//             if (Array.isArray(hours)) {
+//                 const userDate = document.getElementById("date").value;
+//                 console.log("userDate: ", userDate);
+
+//                 const filtered = hours.filter(hour => hour.interval.startTime.startsWith(userDate));
+//                 if (filtered.length === 0) {
+//                     console.log("No forecast data for this date.");
+//                     return;
+//                 }
+
+//                 filtered.forEach((hour, index) => {
+//                     const temp = hour.temperature.degrees;
+//                     const precip = hour.precipitation.probability.percent;
+//                     // const time = hour.interval.startTime;
+//                     const startTime = new Date(hour.interval.startTime).toLocaleString(undefined, {
+//                         hour: '2-digit',
+//                         minute: '2-digit',
+//                         hour12: true,
+//                         month: 'short',
+//                         day: 'numeric',
+//                     });
+//                     const endTime = new Date(hour.interval.endTime).toLocaleString(undefined, {
+//                         hour: '2-digit',
+//                         minute: '2-digit',
+//                         hour12: true,
+//                         month: 'short',
+//                         day: 'numeric',
+//                     });
+//                     const dewPoint = hour.dewPoint.degrees;
+//                     console.log(`Dew Point: ${dewPoint}`);
+//                     console.log(`Hour ${index + 1} (${startTime} - ${endTime}):`);
+//                     console.log(`Temperature: ${temp}°F`);
+//                     console.log(`Precipitation Chance: ${precip}%`);
+//                     var hourlyWeather = document.querySelector("#hourlyWeather");
+//                     const gif = document.createElement('img');
+//                     gif.src = 'icons8-sun.gif';
+//                     if (precip >= 30) {
+//                         gif.src = 'icons8-rain.gif';
+//                     }
+//                     gif.alt = 'Chance of Rain';
+//                     gif.style.width = '20px';
+//                     gif.style.width = '20px';
+//                     const li = document.createElement("li");
+
+//                     var splitStartDateTime = startTime.split(", ");
+//                     var splitEndDateTime = endTime.split(", ");
+//                     li.innerHTML = `${splitStartDateTime[1]} - ${splitEndDateTime[1]}<br>${temp}°F<br>${precip}%`;
+//                     li.appendChild(gif);
+//                     hourlyWeather.appendChild(li);
+
+//                 });
+//             } else {
+//                 console.warn("Hourly data not available.");
+//             }
+//         })
+//         .catch(err => console.error("Weather Proxy Error:", err));
+// }
+//FOR DAILY FORECASTS
 function tryFetchWeather() {
-    if (!selectedLat || !selectedLng || !selectedDate) {
+    if (!selectedLat || !selectedLng) {
         console.log("still null");
         console.log(`selectedLat: ${selectedLat}`);
         console.log(`selectedLng: ${selectedLng}`);
-        console.log(`selectedDate: ${selectedDate}`);
         return;
     }
     console.log('not if');
@@ -219,41 +295,58 @@ function tryFetchWeather() {
             // console.log("Weather Response:", data.response);
 
 
-            const hours = data.response.forecastHours;
+            const days = data.response.forecastDays;
 
-            if (Array.isArray(hours)) {
-                const userDate = document.getElementById("date").value;
-                console.log("userDate: ", userDate);
+            if (Array.isArray(days)) {
+                // const userDate = document.getElementById("date").value;
+                // console.log("userDate: ", userDate);
 
-                const filtered = hours.filter(hour => hour.interval.startTime.startsWith(userDate));
-                if (filtered.length === 0) {
-                    console.log("No forecast data for this date.");
-                    return;
-                }
+                // const filtered = hours.filter(hour => hour.interval.startTime.startsWith(userDate));
+                // if (filtered.length === 0) {
+                //     console.log("No forecast data for this date.");
+                //     return;
+                // }
 
-                filtered.forEach((hour, index) => {
-                    const temp = hour.temperature.degrees;
-                    const precip = hour.precipitation.probability.percent;
+                days.forEach((day, index) => {
+                    const date = day.displayDate.month + "/" + day.displayDate.day;
+                    const maxTemp = day.maxTemperature.degrees;
+                    const minTemp = day.minTemperature.degrees;
+                    const precip = day.daytimeForecast.precipitation.probability.percent;
                     // const time = hour.interval.startTime;
-                    const startTime = new Date(hour.interval.startTime).toLocaleString(undefined, {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        hour12: true,
-                        month: 'short',
-                        day: 'numeric',
-                    });
-                    const endTime = new Date(hour.interval.endTime).toLocaleString(undefined, {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        hour12: true,
-                        month: 'short',
-                        day: 'numeric',
-                    });
-                    const dewPoint = hour.dewPoint.degrees;
-                    console.log(`Dew Point: ${dewPoint}`);
-                    console.log(`Hour ${index + 1} (${startTime} - ${endTime}):`);
-                    console.log(`Temperature: ${temp}°F`);
+                    // const startTime = new Date(day.interval.startTime).toLocaleString(undefined, {
+                    //     hour: '2-digit',
+                    //     minute: '2-digit',
+                    //     hour12: true,
+                    //     month: 'short',
+                    //     day: 'numeric',
+                    // });
+                    // const endTime = new Date(hour.interval.endTime).toLocaleString(undefined, {
+                    //     hour: '2-digit',
+                    //     minute: '2-digit',
+                    //     hour12: true,
+                    //     month: 'short',
+                    //     day: 'numeric',
+                    // });
+
+                    console.log(`Temperature: ${minTemp} - ${maxTemp}°F`);
                     console.log(`Precipitation Chance: ${precip}%`);
+                    var dailyWeather = document.querySelector("#hourlyWeather");
+                    const gif = document.createElement('img');
+                    gif.src = 'icons8-sun.gif';
+                    if (precip >= 30) {
+                        gif.src = 'icons8-rain.gif';
+                    }
+                    gif.alt = 'Chance of Rain';
+                    gif.style.width = '50px';
+                    gif.style.width = '50px';
+                    const li = document.createElement("li");
+                    li.classList.add("weatherList");
+                    // var splitStartDateTime = startTime.split(", ");
+                    // var splitEndDateTime = endTime.split(", ");
+                    // li.innerHTML = `${splitStartDateTime[1]} - ${splitEndDateTime[1]}<br>${temp}°F<br>${precip}%`;
+                    li.innerHTML = `<b>${date}</b><br>${minTemp}°F - ${maxTemp}°F<br>${precip}% Rain<br>`;
+                    li.appendChild(gif);
+                    dailyWeather.appendChild(li);
 
                 });
             } else {

@@ -198,7 +198,7 @@ main {
     /* background-color: #e8871e; */
     background-color: #fff;
     border-radius: 20px;
-    width: 70%;
+    width: 85%;
     /*30%*/
     margin: auto;
     padding: 15px;
@@ -365,4 +365,18 @@ h3 {
 
 #testRightSide {
     background: #e8871e;
+}
+
+#hourlyWeather {
+    list-style: none;
+    padding: none;
+    margin: auto;
+    text-align: center;
+}
+
+.weatherList {
+    display: inline-block;
+    list-style-type: none;
+    margin-right: 15px;
+    text-align: center;
 }

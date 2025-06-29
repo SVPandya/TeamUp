@@ -4,7 +4,8 @@ $lat = $_GET['lat'] ?? null;
 $lng = $_GET['lng'] ?? null;
 $date = $_GET['date'] ?? null;
 
-$url = 'https://weather.googleapis.com/v1/forecast/hours:lookup?key=AIzaSyAuy24KIJyJtG01xMGEFhwMJiRadDjFxeM&location.latitude=' . $lat . '&location.longitude=' . $lng . '&units_system=IMPERIAL&hours=240&pageSize=240';
+// $url = 'https://weather.googleapis.com/v1/forecast/hours:lookup?key=AIzaSyAuy24KIJyJtG01xMGEFhwMJiRadDjFxeM&location.latitude=' . $lat . '&location.longitude=' . $lng . '&units_system=IMPERIAL&hours=240&pageSize=240';
+$url = 'https://weather.googleapis.com/v1/forecast/days:lookup?key=AIzaSyAuy24KIJyJtG01xMGEFhwMJiRadDjFxeM&location.latitude=' . $lat . '&location.longitude=' . $lng . '&units_system=IMPERIAL';
 
 // Initialize cURL
 $ch = curl_init($url);
