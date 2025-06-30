@@ -133,10 +133,13 @@ else{
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Event | TeamUp</title>
-    <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $apiKey ?>&libraries=places"
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $apiKey ?>&libraries=places"
+        defer></script> -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $apiKey ?>&v=beta&libraries=places"
         defer></script>
     <link rel="stylesheet" href="style/home.css">
     <link rel="icon" type="image/png" href="favicons.png">
+   
 </head>
 <body>
    
@@ -167,76 +170,12 @@ else{
 
 
             
-            <!-- <a href="#">Change Profile</a> -->
             <a href="php/logout.php"> <button class="btn">Log Out</button></a>
         </div>
     </div>
 
 
 
-<!-- <form action="" method="post" id="postForm" class="popup-card">
-    <table> 
-        <tr>
-            <td>
-                <div class="userInpPostGroup">   
-                    <label for="sport">Sport</label>
-                    <input class="userInpPost" type="text" id="sport" name="sport" required placeholder="Eg. Tennis">
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="userInpPostGroup">
-                    <label for="location">Location</label>
-                    <input class="userInpPost" type="text" name="location" id="location" placeholder="Enter location" required>
-                    <div id="suggestions"></div>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="userInpPostGroup">
-                    <label for="date">Date</label>
-                    <input class="userInpPost" type="date" name="date" id="date" required>
-                </div>
-            </td>
-            <td>
-                <div class="userInpPostGroup">
-                    <label for="time">Time</label>
-                    <input class="userInpPost" type="time" name="time" id="time" required>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="userInpPostGroup">
-                    <label for="skillLevel">Skill Level</label>
-                    <select class="userInpPost" name="skillLevel" id="skillLevel" required>
-                        <option value="1">Beginner</option>
-                        <option value="2">Intermediate</option>
-                        <option value="3">Advanced</option>
-                    </select>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="userInpPostGroup">
-                    <label for="peopleNeeded">People Needed</label>
-                    <input type="number" class="userInpPost" name="peopleNeeded" id="peopleNeeded" min=1 required>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="userInpPostGroup">
-                    <input type="submit" name="submit" value="Post" class="btn" style="border: none; margin-top: 10px;" required>
-                </div>
-            </td>
-        </tr>
-            </table>
-        </form> -->
-        
         <table style="width: 100%; height: calc(100vh - 60px); border: none; border-spacing: inherit;">
         <tr style="width: 100%;">
             <td style="width: 50%; padding-bottom: 110px;">
@@ -329,13 +268,86 @@ else{
             </form>
         </div>
         </td>
-        <td style="width: 50%; height: 100%; background: #e8871e; z-index: 10;" id="right">
-            <!-- <div id="testRightSide">fd</div> -->
+        <td style="width: 50%; height: 100vh; background: #e8871e; z-index: 10; position: relative;" id="right">
+        <div id="map3d" style="height: 100%; margin: 0; padding: 0;"></div>
+
+<!-- <script>
+    function loadGoogleMaps() {
+        window.init = async function () {
+            const { Map3DElement, MapMode } = await google.maps.importLibrary("maps3d");
+
+
+            
+
+            const map3DElement = new Map3DElement({
+                center: { lat: 40.748817, lng: -73.985428, altitude: 100 },
+                range: 2000,
+                tilt: 45,
+                heading: 0,
+                mode: MapMode.SATELLITE,
+            });
+
+            map3DElement.style.width = "100%";
+            map3DElement.style.height = "100%";
+
+            document.getElementById("map3d").appendChild(map3DElement);
+        };
+
+        const script = document.createElement("script");
+        script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyBpMWXUJA-S9Zy4QkCDCY2FJbEtwoAuaRk&v=beta&libraries=maps3d,places&callback=init";
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+    }
+
+    loadGoogleMaps();
+</script> -->
+<script>
+    // window.addEventListener("load", async () => {
+    //     try {
+    //         const maps3d = await google.maps.importLibrary("maps3d");
+    //         const Map3DElement = maps3d.Map3DElement;
+    //         const MapMode = maps3d.MapMode;
+
+    //         const geocoder = new google.maps.Geocoder();
+    //         const address = document.querySelector("#location").value;
+    //         console.log(`Address: ${address}`);
+
+    //         geocoder.geocode({ address }, (results, status) => {
+    //             if (status === "OK" && results[0]){
+    //                 const lat = results[0].geometry.location.lat();
+    //                 const lng = results[0].geometry.location.lng();
+    //                 console.log(`locaition: ${lat}, ${lng}`);
+    //             }
+    //         })
+
+    //         const map3DElement = new Map3DElement({
+    //             center: { lat: 40.748817, lng: -73.985428, altitude: 100 },
+    //             range: 2000,
+    //             tilt: 45,
+    //             heading: 0,
+    //             mode: MapMode.SATELLITE,
+    //         });
+
+    //         map3DElement.style.width = "100%";
+    //         map3DElement.style.height = "100%";
+
+    //         const container = document.getElementById("map3d");
+    //         if (container) container.appendChild(map3DElement);
+    //     } 
+    //     catch (e) {
+    //         console.error("Failed to load 3D map:", e);
+    //     }
+    // });
+</script>
+
         </td>
         </tr>
         </table> 
         
 
         <script src="index.js"></script>
+
+
 </body>
 </html>
