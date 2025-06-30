@@ -39,6 +39,7 @@
 let selectedLat = null;
 let selectedLng = null;
 let selectedDate = null;
+let address = null;
 
 
 
@@ -78,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         locationInput.value = place.formatted_address;
                         suggestionsBox.style.display = "none";
                         var geocoder = new google.maps.Geocoder();
-                        var address = document.getElementById("location").value;
+                        address = document.getElementById("location").value;
                         var body = document.body;
                         geocoder.geocode({ 'address': locationInput.value }, function (results, status) {
                             if (status == google.maps.GeocoderStatus.OK) {
@@ -175,8 +176,10 @@ async function tryFetchWeather() {
     }
 
     const maps3d = await google.maps.importLibrary("maps3d");
+    // const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
     const Map3DElement = maps3d.Map3DElement;
     const MapMode = maps3d.MapMode;
+    const Marker3DElement = maps3d.Marker3DElement;
 
 
     const map3DElement = new Map3DElement({
@@ -186,6 +189,15 @@ async function tryFetchWeather() {
         heading: 0,
         mode: MapMode.SATELLITE,
     });
+    const marker = new Marker3DElement({
+        position: { lat: selectedLat, lng: selectedLng, altitude: 20 },
+        label: address,
+        altitudeMode: 'RELATIVE_TO_GROUND',
+        extruded: true,
+    });
+
+    map3DElement.append(marker);
+
     console.log(`Selected vals: ${selectedLat}, ${selectedLng}`);
 
     map3DElement.style.width = "100%";
@@ -195,10 +207,11 @@ async function tryFetchWeather() {
     if (mapContainer) {
         mapContainer.innerHTML = "";
         mapContainer.appendChild(map3DElement);
+
     }
 
-    const container = document.getElementById("map3d");
-    if (container) container.appendChild(map3DElement);
+    // const container = document.getElementById("map3d");
+    // if (container) container.appendChild(map3DElement);
 
     console.log('not if');
     fetch(`weatherProxy.php?lat=${selectedLat}&lng=${selectedLng}`)
