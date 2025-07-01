@@ -235,6 +235,7 @@ if (isset($_POST['attendEvent'])) {
 
                     echo "<p class='innerText'>Age Range: " . htmlspecialchars($row['age_range']) . "</p><br>";
                     echo "<p class='innerText'>Open Spaces: " . htmlspecialchars($row['people_needed']) . "</p><br>";
+                    echo "<p class='innerText'>Equipment: " . htmlspecialchars($row['equipment']) . "</p><br>";
                     while ($player = mysqli_fetch_assoc($playersQuery)){
                         $playerNames[] = htmlspecialchars($player['Username']);
                         // $playerPhoneNums[] = htmlspecialchars($player['Phone_Num']);

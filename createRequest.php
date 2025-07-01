@@ -38,6 +38,7 @@ $end_time = $_POST['endTime'];
 $skill_level = $_POST['skillLevel'];
 $people_needed = $_POST['peopleNeeded'];
 $age_range = $_POST['ageRange'];
+$equipment = $_POST['equipment'];
 
 // OPTIONAL: validate inputs (e.g., not empty, valid formats)
 
@@ -46,8 +47,8 @@ $datetime = $date . " " . $time;
 date_default_timezone_set("America/Chicago");
 $today = date("Y-m-d H:i:s");
 if (strtotime($datetime) >= strtotime($today)){
-    $stmt = $conn->prepare("INSERT INTO requests (user_id, sport, location, date, time, end_time, skill_level, people_needed, age_range) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("isssssiis", $user_id, $sport, $location, $date, $time, $end_time, $skill_level, $people_needed, $age_range);
+    $stmt = $conn->prepare("INSERT INTO requests (user_id, sport, location, date, time, end_time, skill_level, people_needed, age_range, equipment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("isssssiiss", $user_id, $sport, $location, $date, $time, $end_time, $skill_level, $people_needed, $age_range, $equipment);
 
     if ($stmt->execute()) {
         // echo "<p style='color: green; font-weight: bold;'>Request posted successfully!</p>";
@@ -246,7 +247,7 @@ else{
                         <div class="userInpPostGroup">
                             <label for="ageRange">Age Range</label>
                             <select name="ageRange" id="ageRange" class="userInpPost" required>
-                                <option value="10-20">10-20</option>
+                                <option value="15-20">15-20</option>
                                 <option value="20-30">20-30</option>
                                 <option value="30-40">30-40</option>
                                 <option value="40-50">40-50</option>
@@ -254,6 +255,11 @@ else{
                                 <option value="60-70">60-70</option>
                                 <option value="70-80">70-80</option>
                             </select>
+                        </div>
+
+                        <div class="userInpPostGroup">
+                            <label for="equipment">Equipment</label>
+                            <input type="text" class="userInpPost" name="equipment" id="equipment" required placeholder="Eg. I will bring 2 rackets and 3 tennis balls.">
                         </div>
                     
                 

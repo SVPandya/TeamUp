@@ -36,6 +36,7 @@ if (isset($_POST['submit'])) {
     $end_time = $_POST['endTime'];
     $skill_level = $_POST['skillLevel'];
     $people_needed = $_POST['peopleNeeded'];
+    $equipment = $_POST['equipment'];
 
     // OPTIONAL: validate inputs (e.g., not empty, valid formats)
     
@@ -44,8 +45,8 @@ if (isset($_POST['submit'])) {
     date_default_timezone_set("America/Chicago");
     $today = date("Y-m-d H:i:s");
     if (strtotime($datetime) >= strtotime($today)){
-        $stmt = $conn->prepare("INSERT INTO requests (user_id, sport, location, date, time, end_time, skill_level, people_needed) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("isssssii", $user_id, $sport, $location, $date, $time, $end_time, $skill_level, $people_needed);
+        $stmt = $conn->prepare("INSERT INTO requests (user_id, sport, location, date, time, end_time, skill_level, people_needed, equipment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("isssssiis", $user_id, $sport, $location, $date, $time, $end_time, $skill_level, $people_needed, $equipment);
 
         if ($stmt->execute()) {
             // echo "<p style='color: green; font-weight: bold;'>Request posted successfully!</p>";
@@ -215,6 +216,7 @@ if (isset($_POST['attendEvent'])) {
                 $end_time = date("g:i A", strtotime($eventData['end_time']));
                 $sport = $eventData['sport'];
                 $location = $eventData['location'];
+                $equipment = $eventData['equipment'];
             }
     
     
@@ -241,7 +243,7 @@ if (isset($_POST['attendEvent'])) {
             
             $mail->Subject = "Participant Added - " . $date . " - " . $sport;
             // $mail->Body = "Hey $name,\nJust wanted to let you know that you're confirmed to attend $sport on $date from $time to $end_time!\nPlayers: $combined, \n\nHave fun,\nTeamUp Team";
-            $mail->Body = "Hey $name,\n\nJust wanted to let you know that a new participant has confirmed to attend $sport on $date from $time to $end_time at $location!\nPlayers: $combined\n\nHave fun,\nTeamUp Team";
+            $mail->Body = "Hey $name,\n\nJust wanted to let you know that a new participant has confirmed to attend $sport on $date from $time to $end_time at $location!\nPlayers: $combined\nEquipment: $equipment\n\nHave fun,\nTeamUp Team";
             
             $mail->send();
             
@@ -407,8 +409,8 @@ if (isset($_POST['attendEvent'])) {
             
             $currentUser = $_SESSION['id'];
             $currentTime = date("Y-m-d H:i:s");
-            if ($res_Age >= 10 && $res_Age <= 20){
-                $userAgeRange = "10-20";
+            if ($res_Age >= 15 && $res_Age <= 20){
+                $userAgeRange = "15-20";
             }
             else if ($res_Age > 20 && $res_Age <= 30){
                 $userAgeRange = "20-30";
@@ -483,6 +485,7 @@ if (isset($_POST['attendEvent'])) {
                     "</p>";
                     
                     echo "<p class='innerText'>Open Spaces: " . htmlspecialchars($row['people_needed']) . "</p>";
+                    echo "<p class='innerText'>Equipment: " . htmlspecialchars($row['equipment']) . "</p>";
                     // echo "<button class='btn' style='margin-top: 10px;'>Attend</button>";
                     echo "<form method='post' action=''>
                     <input type='hidden' name='requestId' value='" . $row['id'] . "'>
