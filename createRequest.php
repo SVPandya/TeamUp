@@ -8,6 +8,7 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 $apiKey = $_ENV['GOOGLE_API_KEY'];
+$mailPassword = $_ENV['PHPMAILER_KEY'];
 
 
 session_start();
@@ -102,7 +103,7 @@ if (strtotime($datetime) >= strtotime($today)){
         $mail->Port = 587;
         
         $mail->Username = "spand0225@gmail.com";
-        $mail->Password = "kkzm ymho mhys fsfq";
+        $mail->Password = $mailPassword;
         
         $mail->setFrom("spand0225@gmail.com", "TeamUp Team");
         $mail->addAddress("$email", $name); //recipient

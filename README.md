@@ -3,6 +3,10 @@ After downloading this repository, create a `.env` file in the base directory an
 
 `GOOGLE_API_KEY = {API KEY}`
 
+In your Google Account, search for `App Passwords` and create a new password with the name `SMTP`. Add the following code:
+
+`PHPMAILER_KEY = "{APP PASSWORD}"`
+
 ## Package Installation (Windows)
 Navigate to the C: drive and run to install Composer:
 
