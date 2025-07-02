@@ -41,9 +41,7 @@ $people_needed = $_POST['peopleNeeded'];
 $age_range = $_POST['ageRange'];
 $equipment = $_POST['equipment'];
 
-// OPTIONAL: validate inputs (e.g., not empty, valid formats)
 
-// Insert into the 'requests' table
 $datetime = $date . " " . $time;
 date_default_timezone_set("America/Chicago");
 $today = date("Y-m-d H:i:s");
@@ -135,8 +133,6 @@ else{
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Event | TeamUp</title>
-    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $apiKey ?>&libraries=places"
-        defer></script> -->
     <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $apiKey ?>&v=beta&libraries=places"
         defer></script>
     <link rel="stylesheet" href="style/home.css">
@@ -187,9 +183,30 @@ else{
             <form action="" method="post" id="postForm" class="popup-card">
                 
                         <!-- <td> -->
-                        <div class="userInpPostGroup">   
+                        <div class="userInpPostGroup" id="sportGroup">   
                             <label for="sport">Sport</label>
-                            <input class="userInpPost" type="text" id="sport" name="sport" required placeholder="Eg. Tennis">
+                            <input class="userInpPost" type="text" id="sport" name="sport" required placeholder="Select or start typing" onclick="showSportList()" onkeyup="filterSport()">
+                            <div class="sportListCont">
+                            <a value="Badminton" class="sportList">Badminton</a>
+                            <a value="Baseball" class="sportList">Baseball</a>
+                            <a value="Basketball" class="sportList">Basketball</a>
+                            <a value="Bowling" class="sportList">Bowling</a>
+                            <a value="Capture the Flag" class="sportList">Capture the Flag</a>
+                            <a value="Cricket" class="sportList">Cricket</a>
+                            <a value="Disk Golf" class="sportList">Disk Golf</a>
+                            <a value="Flag Football" class="sportList">Flag Football</a>
+                            <a value="Football" class="sportList">Football</a>
+                            <a value="Golf" class="sportList">Golf</a>
+                            <a value="Hockey" class="sportList">Hockey</a>
+                            <a value="Pickleball" class="sportList">Pickleball</a><a value="Soccer" class="sportList">Soccer</a>
+                            <a value="Softball" class="sportList">Softball</a>
+                            <a value="Spikeball" class="sportList">Spikeball</a>
+                            <a value="Table Tennis" class="sportList">Table Tennis</a>
+                            <a value="Tennis" class="sportList">Tennis</a>
+                            <a value="Ultimate Frisbee" class="sportList">Ultimate Frisbee</a>
+                            <a value="Volleyball" class="sportList">Volleyball</a>
+                            <a value="Water Polo" class="sportList">Water Polo</a>
+                            </div>
                         </div>
                         
                     
@@ -277,77 +294,6 @@ else{
         </td>
         <td style="width: 50%; height: 100vh; background: #e8871e; z-index: 10; position: relative;" id="right">
         <div id="map3d" style="height: 100%; margin: 0; padding: 0;"></div>
-
-<!-- <script>
-    function loadGoogleMaps() {
-        window.init = async function () {
-            const { Map3DElement, MapMode } = await google.maps.importLibrary("maps3d");
-
-
-            
-
-            const map3DElement = new Map3DElement({
-                center: { lat: 40.748817, lng: -73.985428, altitude: 100 },
-                range: 2000,
-                tilt: 45,
-                heading: 0,
-                mode: MapMode.SATELLITE,
-            });
-
-            map3DElement.style.width = "100%";
-            map3DElement.style.height = "100%";
-
-            document.getElementById("map3d").appendChild(map3DElement);
-        };
-
-        const script = document.createElement("script");
-        script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyBpMWXUJA-S9Zy4QkCDCY2FJbEtwoAuaRk&v=beta&libraries=maps3d,places&callback=init";
-        script.async = true;
-        script.defer = true;
-        document.head.appendChild(script);
-    }
-
-    loadGoogleMaps();
-</script> -->
-<script>
-    // window.addEventListener("load", async () => {
-    //     try {
-    //         const maps3d = await google.maps.importLibrary("maps3d");
-    //         const Map3DElement = maps3d.Map3DElement;
-    //         const MapMode = maps3d.MapMode;
-
-    //         const geocoder = new google.maps.Geocoder();
-    //         const address = document.querySelector("#location").value;
-    //         console.log(`Address: ${address}`);
-
-    //         geocoder.geocode({ address }, (results, status) => {
-    //             if (status === "OK" && results[0]){
-    //                 const lat = results[0].geometry.location.lat();
-    //                 const lng = results[0].geometry.location.lng();
-    //                 console.log(`locaition: ${lat}, ${lng}`);
-    //             }
-    //         })
-
-    //         const map3DElement = new Map3DElement({
-    //             center: { lat: 40.748817, lng: -73.985428, altitude: 100 },
-    //             range: 2000,
-    //             tilt: 45,
-    //             heading: 0,
-    //             mode: MapMode.SATELLITE,
-    //         });
-
-    //         map3DElement.style.width = "100%";
-    //         map3DElement.style.height = "100%";
-
-    //         const container = document.getElementById("map3d");
-    //         if (container) container.appendChild(map3DElement);
-    //     } 
-    //     catch (e) {
-    //         console.error("Failed to load 3D map:", e);
-    //     }
-    // });
-</script>
-
         </td>
         </tr>
         </table> 

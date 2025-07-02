@@ -130,6 +130,41 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
     });
+
+
+
+
+
+    document.addEventListener("click", function (event) {
+        // if (e.target !== document.querySelector("#sport")) {
+        //     console.log("hi");
+        //     document.querySelector(".sportListCont").style.display = "none";
+        // }
+        const sportInput = document.querySelector('#sport');
+        if (!sportInput.contains(event.target)) {
+            document.querySelector(".sportListCont").style.display = "none";
+        }
+
+    });
+
+
+    const sportsList = document.querySelectorAll(".sportList");
+    // sportsList.addEventListener("click", function (event) {
+    // const sportInput = document.querySelector('#sport');
+    // if (!sportInput.contains(event.target)) {
+
+    // }
+    // console.log("clicked");
+    for (let i = 0; i < sportsList.length; i++) {
+        sportsList[i].addEventListener("click", function (event) {
+            console.log("clicked");
+            // if (sportsList[i].contains(event.target)) {
+            sportInput.value = sportsList[i].textContent;
+            document.querySelector(".sportListCont").style.display = "none";
+            // }
+        });
+    }
+    // });
 });
 // }
 
@@ -254,3 +289,31 @@ async function tryFetchWeather() {
         })
         .catch(err => console.error("Weather Proxy Error:", err));
 }
+
+
+
+function showSportList() {
+    const sports = document.querySelectorAll(".sportList");
+    sports.forEach(sport => {
+        console.log(`style: ${sport.style.display}`);
+        sport.style.display = "block";
+        document.querySelector(".sportListCont").style.display = "block";
+    });
+}
+
+function filterSport() {
+    const input = document.querySelector("#sport");
+    const filter = input.value.toUpperCase();
+    const a = document.querySelectorAll(".sportList");
+
+    for (let i = 0; i < a.length; i++) {
+        txtValue = a[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            a[i].style.display = "block";
+        }
+        else {
+            a[i].style.display = "none";
+        }
+    }
+}
+
