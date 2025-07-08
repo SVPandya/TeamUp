@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
     $end_time = $_POST['endTime'];
     $skill_level = $_POST['skillLevel'];
     $people_needed = $_POST['peopleNeeded'];
-    $equipment = $_POST['equipment'];
+    // $equipment = $_POST['equipment'];
 
     // OPTIONAL: validate inputs (e.g., not empty, valid formats)
     
@@ -46,8 +46,10 @@ if (isset($_POST['submit'])) {
     date_default_timezone_set("America/Chicago");
     $today = date("Y-m-d H:i:s");
     if (strtotime($datetime) >= strtotime($today)){
-        $stmt = $conn->prepare("INSERT INTO requests (user_id, sport, location, date, time, end_time, skill_level, people_needed, equipment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("isssssiis", $user_id, $sport, $location, $date, $time, $end_time, $skill_level, $people_needed, $equipment);
+        // $stmt = $conn->prepare("INSERT INTO requests (user_id, sport, location, date, time, end_time, skill_level, people_needed, equipment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        // $stmt->bind_param("isssssiis", $user_id, $sport, $location, $date, $time, $end_time, $skill_level, $people_needed, $equipment);
+        $stmt = $conn->prepare("INSERT INTO requests (user_id, sport, location, date, time, end_time, skill_level, people_needed) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("isssssiis", $user_id, $sport, $location, $date, $time, $end_time, $skill_level, $people_needed);
 
         if ($stmt->execute()) {
             // echo "<p style='color: green; font-weight: bold;'>Request posted successfully!</p>";
@@ -80,10 +82,11 @@ if (isset($_POST['submit'])) {
 if (isset($_POST['attendEvent'])){
     $peopleNeeded = $_POST['peopleNeeded'];
     $requestId = $_POST['requestId'];
+    $equipmentUpdated = $_POST['equipmentUpdated'];
     if ($peopleNeeded > 0){
         $peopleNeeded --;
-        $stmt=$conn->prepare("UPDATE requests SET people_needed = ? WHERE id = ?");
-        $stmt->bind_param("ii", $peopleNeeded, $requestId);
+        $stmt=$conn->prepare("UPDATE requests SET people_needed = ?, equipment = ? WHERE id = ?");
+        $stmt->bind_param("isi", $peopleNeeded, $equipmentUpdated, $requestId);
 
         if ($stmt->execute()){
             // echo "<script>alert('Attendance Confirmed!')</script>";
@@ -91,6 +94,8 @@ if (isset($_POST['attendEvent'])){
         else{
             echo "<script>alert('Error: ,'" . $stmt->error . ")</script>";
         }
+
+        
     }
         // $query = "DELETE FROM requests WHERE people_needed = 0";
         // mysqli_query($conn, $query);
@@ -171,7 +176,6 @@ if (isset($_POST['attendEvent'])) {
 
 
 
-        //Change this so it does it sends an email to everyone signed up in attendances per that request_id
         $allUsersQuery = $conn->prepare("SELECT user_id FROM attendances WHERE request_id = ?");
         $allUsersQuery->bind_param("i", $requestId);
         $allUsersQuery->execute();
@@ -217,7 +221,7 @@ if (isset($_POST['attendEvent'])) {
                 $end_time = date("g:i A", strtotime($eventData['end_time']));
                 $sport = $eventData['sport'];
                 $location = $eventData['location'];
-                $equipment = $eventData['equipment'];
+                // $equipment = $eventData['equipment'];
             }
     
     
@@ -244,7 +248,7 @@ if (isset($_POST['attendEvent'])) {
             
             $mail->Subject = "Participant Added - " . $date . " - " . $sport;
             // $mail->Body = "Hey $name,\nJust wanted to let you know that you're confirmed to attend $sport on $date from $time to $end_time!\nPlayers: $combined, \n\nHave fun,\nTeamUp Team";
-            $mail->Body = "Hey $name,\n\nJust wanted to let you know that a new participant has confirmed to attend $sport on $date from $time to $end_time at $location!\nPlayers: $combined\nEquipment: $equipment\n\nHave fun,\nTeamUp Team";
+            $mail->Body = "Hey $name,\n\nJust wanted to let you know that a new participant has confirmed to attend $sport on $date from $time to $end_time at $location!\nPlayers: $combined\n\nHave fun,\nTeamUp Team";
             
             $mail->send();
             
@@ -485,12 +489,52 @@ if (isset($_POST['attendEvent'])) {
                     ) . 
                     "</p>";
                     
-                    echo "<p class='innerText'>Open Spaces: " . htmlspecialchars($row['people_needed']) . "</p>";
-                    echo "<p class='innerText'>Equipment: " . htmlspecialchars($row['equipment']) . "</p>";
+                    echo "<p style='color: #858585;'><strong>Open Spaces:</strong></p>";
+                    echo "<p class='innerText'>" . htmlspecialchars($row['people_needed']) . "</p>";
+
+
+
+
+
+
+
+
+                    $equipmentList = explode(",", $row['equipment']);
+                    if (count($equipmentList) > 0 && trim($row['equipment']) !== "") {
+                        echo "<p style='color: #858585;'><strong>Equipment:</strong></p>";
+                        foreach ($equipmentList as $equipmentPiece) {
+                            // if (!str_contains($equipmentPiece, "_checked")){
+                            $equipmentPiece = trim($equipmentPiece);
+                            // $checkboxId = 'equip_' . $row['id'] . '_' . preg_replace('/[^a-zA-Z0-9]/', '', $equipmentPiece);
+                            $checkboxId = $equipmentPiece;
+                            
+                                // echo "<input hidden type='checkbox' name='equipment[]' class='toggle-btn homePageCheckboxes' value='" . htmlspecialchars($equipmentPiece) . "' id='" . $checkboxId . "'>";
+                                // echo "<label hidden style='display: inline-flex; align-items: center; margin-right: 10px;' for='$checkboxId' class='toggle-btn'>";
+                            // }
+                            // else{
+                            echo "<input type='checkbox' name='equipment[]' class='toggle-btn homePageCheckboxes' value='" . htmlspecialchars($equipmentPiece) . "' id='" . $checkboxId . "'>";
+                            if (!str_contains($equipmentPiece, "_checked")){
+                                echo "<label style='display: inline-flex; align-items: center; margin-right: 10px;' for='$checkboxId' class='toggle-btn'>";
+                            }
+                            else{
+                                echo "<label style='display: none; align-items: center; margin-right: 10px;' for='$checkboxId' class='toggle-btn'>";
+                            }
+                            echo htmlspecialchars($equipmentPiece);
+                            echo "</label>";
+                            // }
+                        }
+                    }
+
+
+
+
+
+                    // echo "<p class='innerText'>Equipment: " . htmlspecialchars($row['equipment']) . "</p>";
                     // echo "<button class='btn' style='margin-top: 10px;'>Attend</button>";
                     echo "<form method='post' action=''>
                     <input type='hidden' name='requestId' value='" . $row['id'] . "'>
                     <input type='hidden' name='peopleNeeded' value='" . $row['people_needed'] . "'>
+                    <input type='hidden' name='equipmentUpdated' id='allEquipmentChecked' value='" . $row['equipment'] . "'>
                     <button type='submit' name='attendEvent' class='btn' style='margin-top: 10px; width: 100%;'>Attend</button>
                     </form>";
                     echo "</td><td style='vertical-align: top; text-align: right;'>";
@@ -503,7 +547,7 @@ if (isset($_POST['attendEvent'])) {
                 }
 
 
-                // mailersend token: mlsn.8ec2d63e15de1b40a18cfad5c4cf68e6a09c0172005bd9e4e400198c551cdbee
+                
                 
             ?>
             </div>

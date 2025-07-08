@@ -40,11 +40,19 @@ let selectedLat = null;
 let selectedLng = null;
 let selectedDate = null;
 let address = null;
+let equipment = [];
+let checkedEquipment = [];
 
 
 
 
 document.addEventListener("DOMContentLoaded", () => {
+
+
+    document.querySelectorAll(".homePageCheckboxes").forEach(checkbox => {
+        checkbox.addEventListener("change", updateCheckedEquipment);
+    });
+
     const sportInput = document.getElementById("sport");
     const locationInput = document.getElementById("location");
     const suggestionsBox = document.getElementById("suggestions");
@@ -164,7 +172,35 @@ document.addEventListener("DOMContentLoaded", () => {
             // }
         });
     }
-    // });
+
+
+
+
+
+
+
+    document.querySelectorAll("form").forEach(form => {
+        const checkboxes = form.querySelectorAll("input[name='equipment_checked[]']");
+        const hidden = form.querySelector("input[name='equipment_checked_string']");
+        checkboxes.forEach(cb => {
+            cb.addEventListener("change", () => {
+                const checked = Array.from(checkboxes)
+                    .filter(c => c.checked)
+                    .map(c => c.value.trim());
+                for (let i = 0; i < checked.length; i++) {
+                    checked[i].classList.add("checked");
+                }
+                hidden.value = checked.join(", ");
+            });
+        });
+    });
+
+
+
+
+
+
+
 });
 // }
 
@@ -316,4 +352,79 @@ function filterSport() {
         }
     }
 }
+
+
+
+function updateCheckedEquipment() {
+    equipment = [];
+    document.querySelectorAll("input[name='equipment[]'").forEach(cb => {
+        if (!equipment.includes(cb.id)) {
+            equipment.push(cb.id);
+
+        }
+    });
+
+
+    checkedEquipment = [];
+    document.querySelectorAll("input[name='equipment[]']:checked").forEach(cb => {
+        if (!checkedEquipment.includes(cb.id)) {
+            checkedEquipment.push(cb.id);
+            equipment[equipment.indexOf(cb.id)] = cb.id + "_checked";
+        }
+    });
+
+
+
+    console.log("Checked equipment: " + checkedEquipment);
+    console.log("All equipment: " + equipment);
+    document.querySelector("#allEquipmentChecked").value = equipment.join(",");
+    document.querySelector("#checkedEquipmentOnly").value = checkedEquipment.join(",");
+}
+
+
+
+function addEquip(event) {
+    event.preventDefault();
+    const equipmentInp = document.querySelector("#equipment");
+    const equipmentContainer = document.querySelector(".equipmentContainer");
+    equipmentContainer.innerHTML = "";
+    if (equipmentInp.value.length != 0) {
+        equipment.push(equipmentInp.value);
+        equipmentInp.value = "";
+    }
+    console.log(equipment);
+    equipment.forEach(equipmentPiece => {
+        const wrapper = document.createElement("div");
+        wrapper.style.display = "flex";
+        wrapper.style.justifyContent = "center";
+        wrapper.style.alignItems = "center";
+        wrapper.style.width = "100%";
+        wrapper.style.marginBottom = "8px";
+
+
+        const checkbox = document.createElement("input");
+        checkbox.id = equipmentPiece;
+        checkbox.addEventListener("change", updateCheckedEquipment);
+        checkbox.setAttribute("type", "checkbox");
+        checkbox.setAttribute("name", "equipment[]");
+        checkbox.classList.add("toggle-btn");
+
+        const checkboxLabel = document.createElement("label");
+        checkboxLabel.setAttribute("for", checkbox.id);
+        checkboxLabel.textContent = equipmentPiece;
+        checkboxLabel.style.margin = "3px";
+
+        wrapper.appendChild(checkbox);
+        wrapper.appendChild(checkboxLabel);
+        equipmentContainer.appendChild(wrapper);
+
+    });
+}
+
+
+function testFunc() {
+    console.log("helo");
+}
+
+
 

@@ -91,6 +91,7 @@ body {
     border: none;
     transition: all 0.2s ease;
     box-sizing: border-box;
+    font-weight: 500;
 }
 
 .btn:hover {
@@ -399,4 +400,39 @@ h3 {
     overflow-y: auto;
     padding: 10px;
     border-radius: 10px;
+}
+
+/* .checkboxList{
+
+} */
+
+
+.toggle-btn {
+    display: none;
+}
+
+.toggle-btn+label {
+    display: block;
+    padding: 8px 14px;
+    margin: 6px 8px 6px 0;
+    border: 2px solid #e8871e;
+    border-radius: 6px;
+    background-color: white;
+    color: #e8871e;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 80%;
+    text-align: center;
+}
+
+.toggle-btn+label:hover {
+    /* background-color: #e7f1ff; */
+    transform: translateY(-2px);
+}
+
+.toggle-btn:checked+label {
+    background-color: #c26e15;
+    color: white;
+    border-color: #c26e15;
 }

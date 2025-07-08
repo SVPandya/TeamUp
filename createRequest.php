@@ -39,21 +39,27 @@ $end_time = $_POST['endTime'];
 $skill_level = $_POST['skillLevel'];
 $people_needed = $_POST['peopleNeeded'];
 $age_range = $_POST['ageRange'];
-$equipment = $_POST['equipment'];
+// $equipment = $_POST['equipment'];
+$equipmentString = $_POST['allEquipment'];
+$equipmentStringChecked = $_POST['allEquipmentChecked'];
+$equipmentChecked = $_POST['checkedEquipmentOnly'];
+// $equipmentChecked = $_POST['sport'];
 
 
 $datetime = $date . " " . $time;
 date_default_timezone_set("America/Chicago");
 $today = date("Y-m-d H:i:s");
 if (strtotime($datetime) >= strtotime($today)){
+    // $stmt = $conn->prepare("INSERT INTO requests (user_id, sport, location, date, time, end_time, skill_level, people_needed, age_range, equipment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    // $stmt->bind_param("isssssiiss", $user_id, $sport, $location, $date, $time, $end_time, $skill_level, $people_needed, $age_range, $equipment);
     $stmt = $conn->prepare("INSERT INTO requests (user_id, sport, location, date, time, end_time, skill_level, people_needed, age_range, equipment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("isssssiiss", $user_id, $sport, $location, $date, $time, $end_time, $skill_level, $people_needed, $age_range, $equipment);
+    $stmt->bind_param("isssssiiss", $user_id, $sport, $location, $date, $time, $end_time, $skill_level, $people_needed, $age_range, $equipmentStringChecked);
 
     if ($stmt->execute()) {
         // echo "<p style='color: green; font-weight: bold;'>Request posted successfully!</p>";
         $requestId = $conn->insert_id;
-        $attendStmt = $conn->prepare("INSERT INTO attendances (user_id, request_id) VALUES (?, ?)");
-        $attendStmt->bind_param("ii", $user_id, $requestId);
+        $attendStmt = $conn->prepare("INSERT INTO attendances (user_id, request_id, equipment_checked) VALUES (?, ?, ?)");
+        $attendStmt->bind_param("iis", $user_id, $requestId, $equipmentChecked);
         $attendStmt->execute();
         $attendStmt->close();
         echo "<script>alert('Posted Successfully.)</script>";
@@ -275,14 +281,40 @@ else{
                             </select>
                         </div>
 
-                        <div class="userInpPostGroup">
+                        <!-- <div class="userInpPostGroup">
                             <label for="equipment">Equipment</label>
                             <input type="text" class="userInpPost" name="equipment" id="equipment" required placeholder="Eg. I will bring 2 rackets and 3 tennis balls.">
+                        </div> -->
+                    
+                
+                
+                    
+                        
+                        <table style="width: 100%;">
+                            <tr style="width: 100%;">
+                                <!-- style="width: 100%;" -->
+                                <td style="width: 50%;">
+                                    <div class="userInpPostGroup">
+                                        <input type="text" class="userInpPost" name="equipment" id="equipment" placeholder="Racket">
+                                    </div>
+                                </td>
+                                <td style="width: 50%;">
+                                    <div class="userInpPostGroup">
+                                        <button name="addEquipment" class='btn' required onclick="addEquip(event)" >Add Equipment Item</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div class="userInpPostGroup">
+                            <h4>What will you bring?</h4>
+                            <div class="equipmentContainer"></div>
+                            <input type="hidden" id="allEquipment" name="allEquipment">
+                            <input type="hidden" id="allEquipmentChecked" name="allEquipmentChecked">
+                            <input type="hidden" id="checkedEquipmentOnly" name="checkedEquipmentOnly">
+
                         </div>
-                    
-                
-                
-                    
+
                         <div class="userInpPostGroup">
                             <input type="submit" name="submit" value="Post" class="btn" style="border: none; margin-top: 10px;" required>
                         </div>

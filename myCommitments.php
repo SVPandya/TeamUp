@@ -186,7 +186,7 @@ if (isset($_POST['attendEvent'])) {
             $currentUser = $_SESSION['id'];
             $currentTime = date("Y-m-d H:i:s");
                 // $result = mysqli_query($conn, "SELECT * FROM requests WHERE user_id != '$currentUser' AND CONCAT(date, ' ', time) >= '$currentTime' ORDER BY date, time");
-                $result = mysqli_query($conn, "SELECT r.* FROM attendances a JOIN requests r ON a.request_id = r.id WHERE a.user_id
+                $result = mysqli_query($conn, "SELECT r.*, a.equipment_checked FROM attendances a JOIN requests r ON a.request_id = r.id WHERE a.user_id
                 ='$currentUser' AND CONCAT(r.date, ' ', r.time) >= '$currentTime' ORDER BY r.date, r.time");
 
                 while ($row = mysqli_fetch_assoc($result)){
@@ -198,6 +198,7 @@ if (isset($_POST['attendEvent'])) {
                     $formattedDate = date("F j, Y", strtotime($row['date']));
                     $formattedEndTime = date("g:i A", strtotime($row['end_time']));
                     $formattedTime = date("g:i A", strtotime($row['time']));
+                    $equipmentChecked = $row['equipment_checked'];
 
                     echo "<div class='postCard'>";
                     echo "<table><tr><td style='width: 35%; vertical-align: top;'>";
@@ -233,9 +234,11 @@ if (isset($_POST['attendEvent'])) {
                             ($row['skill_level'] == 2 ? 'Intermediate' : 'Advanced')
                         ) . "</p>";
 
-                    echo "<p class='innerText'>Age Range: " . htmlspecialchars($row['age_range']) . "</p><br>";
-                    echo "<p class='innerText'>Open Spaces: " . htmlspecialchars($row['people_needed']) . "</p><br>";
-                    echo "<p class='innerText'>Equipment: " . htmlspecialchars($row['equipment']) . "</p><br>";
+                    echo "<p style='color: #858585;'><strong>Age Range:</strong></p>";
+                    echo "<p class='innerText'>" . htmlspecialchars($row['age_range']) . "</p>";
+                    echo "<p style='color: #858585;'><strong>Open Spaces:</strong></p>";
+                    echo "<p class='innerText'>" . htmlspecialchars($row['people_needed']) . "</p>";
+                    // echo "<p class='innerText'>Equipment: " . htmlspecialchars($row['equipment']) . "</p><br>";
                     while ($player = mysqli_fetch_assoc($playersQuery)){
                         $playerNames[] = htmlspecialchars($player['Username']);
                         // $playerPhoneNums[] = htmlspecialchars($player['Phone_Num']);
@@ -256,7 +259,10 @@ if (isset($_POST['attendEvent'])) {
                         $combined = $playerNames[$i] . " (" . $playerPhoneNums[$i] . ")・";
                     }
                     $combined .= $playerNames[count($playerNames)-1] . " (" . $playerPhoneNums[count($playerNames)-1] . ")";
-                    echo "<p class='innerText'>Players: " . $combined . "</p>";
+                    echo "<p style='color: #858585;'><strong>Players:</strong></p>";
+                    echo "<p class='innerText'>" . $combined . "</p>";
+                    echo "<p style='color: #858585;'><strong>My Equipment:</strong></p>";
+                    echo "<p class='innerText'>$equipmentChecked</p>";
                     echo "</td><td style='vertical-align: top; text-align: right;'>";
                     echo "<img class='postImage' src='" . $imgUrl . "'>";
                     echo "</td>";
