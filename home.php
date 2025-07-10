@@ -110,6 +110,7 @@ if (isset($_POST['attendEvent'])){
 if (isset($_POST['attendEvent'])) {
     $requestId = $_POST['requestId'];
     $userId = $_SESSION['id'];
+    $userEquipment = $_POST['userEquipment'];
 
 
 
@@ -125,8 +126,8 @@ if (isset($_POST['attendEvent'])) {
     $result = $check->get_result();
 
     if ($result->num_rows == 0) {
-        $insert = $conn->prepare("INSERT INTO attendances (user_id, request_id) VALUES (?, ?)");
-        $insert->bind_param("ii", $userId, $requestId);
+        $insert = $conn->prepare("INSERT INTO attendances (user_id, request_id, equipment_checked) VALUES (?, ?, ?)");
+        $insert->bind_param("iis", $userId, $requestId, $userEquipment);
         $insert->execute();
         $insert->close();
 
@@ -535,6 +536,7 @@ if (isset($_POST['attendEvent'])) {
                     <input type='hidden' name='requestId' value='" . $row['id'] . "'>
                     <input type='hidden' name='peopleNeeded' value='" . $row['people_needed'] . "'>
                     <input type='hidden' name='equipmentUpdated' id='allEquipmentChecked' value='" . $row['equipment'] . "'>
+                    <input type='hidden' name='userEquipment' id='userEquipment' value='" . "" . "'>
                     <button type='submit' name='attendEvent' class='btn' style='margin-top: 10px; width: 100%;'>Attend</button>
                     </form>";
                     echo "</td><td style='vertical-align: top; text-align: right;'>";
