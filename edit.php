@@ -1,4 +1,11 @@
 <?php
+require_once __DIR__ . '/vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+$apiKey = $_ENV['GOOGLE_API_KEY'];
+
     session_start();
 
     include("php/config.php");
@@ -15,6 +22,7 @@
     <link rel="stylesheet" href="style/style.css">
     <title>Change Profile | TeamUp</title>
     <link rel="icon" type="image/png" href="favicons.png">
+    <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $apiKey?>&libraries=places" defer></script>
 </head>
 <body>
     <div class="nav">
@@ -42,10 +50,11 @@
                     $email = $_POST['email'];
                     $age = $_POST['age'];
                     $phoneNum = $_POST['phoneNum'];
+                    $city = $_POST['town'];
 
                     $id=$_SESSION['id'];
 
-                    $edit_query = mysqli_query($conn, "UPDATE users SET Username='$username', Email = '$email', Age = '$age', Phone_Num = '$phoneNum' WHERE Id=$id") or die ("Error occurred");
+                    $edit_query = mysqli_query($conn, "UPDATE users SET Username='$username', Email = '$email', Age = '$age', Phone_Num = '$phoneNum', town='$city' WHERE Id=$id") or die ("Error occurred");
 
                     if ($edit_query){
                         echo "<div class='message'>
@@ -65,10 +74,9 @@
                         $res_Email = $result['Email'];
                         $res_Age = $result['Age'];
                         $res_Phone = $result['Phone_Num'];
+                        $res_City = $result['town'];
                     }
                 ?>
-
-
             <header>Change Profile</header>
             <form action="" method="post">
                 <div class="field input">
@@ -92,6 +100,12 @@
                 </div>
 
 
+                <div class="field input">
+                    <label for="town">City</label>
+                    <input type="text" name="town" id="town" value="<?php echo htmlspecialchars($res_City, ENT_QUOTES); ?>">
+                    <div id="citySuggestions" style="border: 1px solid #ccc; max-height: 150px; overflow-y: auto; display: none;"></div>
+                </div>
+
 
                 <div class="field">
                     <input type="submit" class="btn" name="submit" value="Update" required>
@@ -101,5 +115,6 @@
         </div>
         <?php } ?>
     </div>
+    <script src="register.js"></script>
 </body>
 </html>
