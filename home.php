@@ -442,7 +442,7 @@ if (isset($_POST['attendEvent'])) {
 
                 while ($row = mysqli_fetch_assoc($result)){
                     if ($row['people_needed'] > 0 && $row['age_range'] == $userAgeRange){
-                    $location = htmlspecialchars($row['location']);
+                    // $location = htmlspecialchars($row['location']);
                     
                     // $geocodeDataStart = file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?address={$currentUserTown}&key={$apiKey}");
                     // $outputFrom = json_decode($geocodeDataStart);
@@ -465,6 +465,36 @@ if (isset($_POST['attendEvent'])) {
                     // $miles = $km*0.62137;
 
                     // if ($miles <= 6){
+                    $location = htmlspecialchars($row['location']);
+
+$addressFrom = urlencode($currentUserTown);
+$addressTo = urlencode($location);
+
+$geocodeDataStart = file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?address={$addressFrom}&key={$apiKey}");
+$outputFrom = json_decode($geocodeDataStart);
+
+$geocodeDataEnd = file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?address={$addressTo}&key={$apiKey}");
+$outputTo = json_decode($geocodeDataEnd);
+
+if (!empty($outputFrom->results[0]) && !empty($outputTo->results[0])) {
+    $latFrom = $outputFrom->results[0]->geometry->location->lat;
+    $lngFrom = $outputFrom->results[0]->geometry->location->lng;
+    $latTo = $outputTo->results[0]->geometry->location->lat;
+    $lngTo = $outputTo->results[0]->geometry->location->lng;
+
+    $latFrom = deg2rad($latFrom);
+    $lngFrom = deg2rad($lngFrom);
+    $latTo = deg2rad($latTo);
+    $lngTo = deg2rad($lngTo);
+
+    $inside = (1 - cos($latTo - $latFrom) + cos($latFrom) * cos($latTo) * (1 - cos($lngTo - $lngFrom))) / 2;
+    $km = 2 * 6371 * asin(sqrt($inside));
+    $miles = $km * 0.62137;
+
+    if ($miles <= 25) {
+        // do something
+    
+
                     
 
                     $formattedDate = date("F j, Y", strtotime($row['date']));
@@ -572,7 +602,8 @@ if (isset($_POST['attendEvent'])) {
                     echo "</div>";
                     }
                 }
-            // }
+            }
+            }
 
 
                 
