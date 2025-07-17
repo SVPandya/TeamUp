@@ -1,3 +1,14 @@
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+$apiKey = $_ENV['GOOGLE_API_KEY'];
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +17,7 @@
     <link rel="stylesheet" href="style/style.css">
     <title>Sign Up | TeamUp</title>
     <link rel="icon" type="image/png" href="favicons.png">
+    <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $apiKey?>&libraries=places" defer></script>
 </head>
 <body>
 
@@ -35,6 +47,7 @@
                     $age = $_POST['age'];
                     $password = $_POST['password'];
                     $phoneNum = $_POST['phoneNum'];
+                    $town = $_POST['town'];
 
                     //verifying the unique email
 
@@ -54,7 +67,7 @@
                         echo "<a href='javascript:self.history.back()'><button class='btn'>Go Back</button></a>";
                     }
                     else{
-                        mysqli_query($conn, "INSERT INTO users(Username, Email, Age, Password, Phone_Num) VALUES('$username', '$email', '$age', '$password', '$phoneNum')") or die ("Error occurred");
+                        mysqli_query($conn, "INSERT INTO users(Username, Email, Age, Password, Phone_Num, town) VALUES('$username', '$email', '$age', '$password', '$phoneNum', '$town')") or die ("Error occurred");
                         echo "<div class='message'>
                         <p>Registration successful</p>
                         </div> <br>";
@@ -113,6 +126,12 @@
                     <input type="number" name="phoneNum" id="phoneNum" required autocomplete="off">
                 </div>
 
+                <div class="field input">
+                    <label for="town">City</label>
+                    <input type="text" name="town" id="town" required autocomplete="off">
+                    <div id="citySuggestions" style="border: 1px solid #ccc; max-height: 150px; overflow-y: auto; display: none;"></div>
+                </div>
+
 
                 <div class="field">
                     <input type="submit" class="btn" name="submit" value="Register" required>
@@ -125,5 +144,6 @@
         </div>
         <?php } ?>
     </div>
+    <script src="register.js"></script>
 </body>
 </html>

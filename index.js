@@ -49,6 +49,12 @@ let checkedEquipment = [];
 document.addEventListener("DOMContentLoaded", () => {
 
 
+
+
+
+
+
+
     document.querySelectorAll(".homePageCheckboxes").forEach(checkbox => {
         checkbox.addEventListener("change", updateCheckedEquipment);
     });
