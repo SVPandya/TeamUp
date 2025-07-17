@@ -414,6 +414,7 @@ if (isset($_POST['attendEvent'])) {
             <?php
             
             $currentUser = $_SESSION['id'];
+            $currentUserTown = $_SESSION['town'];
             $currentTime = date("Y-m-d H:i:s");
             if ($res_Age >= 15 && $res_Age <= 20){
                 $userAgeRange = "15-20";
@@ -441,7 +442,31 @@ if (isset($_POST['attendEvent'])) {
 
                 while ($row = mysqli_fetch_assoc($result)){
                     if ($row['people_needed'] > 0 && $row['age_range'] == $userAgeRange){
+                    $location = htmlspecialchars($row['location']);
                     
+                    // $geocodeDataStart = file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?address={$currentUserTown}&key={$apiKey}");
+                    // $outputFrom = json_decode($geocodeDataStart);
+
+                    // $geocodeDataEnd = file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?address={$location}&key={$apiKey}");
+                    // $outputTo = json_decode($geocodeDataEnd);
+
+                    // $latFrom = $outputFrom->results[0]->geometry->location->lat;
+                    // $lngFrom = $outputFrom->results[0]->geometry->location->lng;
+                    // $latTo = $outputTo->results[0]->geometry->location->lat;
+                    // $lngTo = $outputTo->results[0]->geometry->location->lng;
+
+                    // $latFrom = deg2rad($latFrom);
+                    // $lngFrom = deg2rad($lngFrom);
+                    // $latTo = deg2rad($latTo);
+                    // $lngTo = deg2rad($lngTo);
+
+                    // $inside = (1-cos($latTo-$latFrom) + cos($latFrom)*cos($latTo)*(1-cos($lngTo-$lngFrom))) / 2;
+                    // $km = 2*6371 * asin(sqrt($inside));
+                    // $miles = $km*0.62137;
+
+                    // if ($miles <= 6){
+                    
+
                     $formattedDate = date("F j, Y", strtotime($row['date']));
                     $formattedTime = date("g:i A", strtotime($row['time']));
                     $formattedEndTime = date("g:i A", strtotime($row['end_time']));
@@ -470,7 +495,7 @@ if (isset($_POST['attendEvent'])) {
                     else{
                         $imgUrl = "sports-tools.jpg";
                     }
-                    $location = htmlspecialchars($row['location']);
+                    
                     // echo "<a href='https://www.google.com/maps/search/?api=1&query=" . $location . "' target='_blank'>" . $location . "</a><br>" . 
                     // $formattedDate . "<br>" . 
                     // $formattedTime . "<br>" .
@@ -547,6 +572,7 @@ if (isset($_POST['attendEvent'])) {
                     echo "</div>";
                     }
                 }
+            // }
 
 
                 

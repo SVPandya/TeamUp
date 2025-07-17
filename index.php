@@ -40,6 +40,7 @@
                     $_SESSION['username'] = $row['Username'];
                     $_SESSION['age'] = $row['Age'];
                     $_SESSION['id'] = $row['Id'];
+                    $_SESSION['town'] = $row['town'];
                 }
                 else{
                     echo "<div class='message' style='

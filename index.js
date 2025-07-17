@@ -384,8 +384,8 @@ function updateCheckedEquipment() {
     console.log("Checked equipment: " + checkedEquipment);
     console.log("All equipment: " + equipment);
     document.querySelector("#allEquipmentChecked").value = equipment.join(",");
-    // document.querySelector("#checkedEquipmentOnly").value = checkedEquipment.join(",");
-    document.querySelector("#userEquipment").value = checkedEquipment.join(",");
+    document.querySelector("#checkedEquipmentOnly").value = checkedEquipment.join(",");
+    // document.querySelector("#userEquipment").value = checkedEquipment.join(",");
 }
 
 
