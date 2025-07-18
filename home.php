@@ -408,10 +408,41 @@ if (isset($_POST['attendEvent'])) {
 
 
         <!-- See Posts -->
+         <!-- <form method="GET">
+            <select name="mileRadius" id="mileRadius" onchange="this.form.submit()">
+                <option value="10">10 Miles</option>
+                <option value="25">25 Miles</option>
+                <option value="50">50 Miles</option>
+            </select>
+         </form> -->
+         <?php
+         
+         if (isset($_GET['mileRadius'])) {
+                $mileRadius = $_GET['mileRadius'];
+                
+            }
+            else{
+                $mileRadius = "10";
+            }
+         
+         ?>
+         
+
+
         <div class="viewPosts">
+            <form method="GET">
+            <select name="mileRadius" id="mileRadius" onchange="this.form.submit()">
+                <option value="10" <?php if ($mileRadius == "10") echo "selected"; ?>>10 Miles</option>
+                <option value="25" <?php if ($mileRadius == "25") echo "selected"; ?>>25 Miles</option>
+                <option value="50" <?php if ($mileRadius == "50") echo "selected"; ?>>50 Miles</option>
+            </select>
+        </form>
             <h2 style="margin-top: 2%;">Open Requests</h2>
             <div class="viewPostCards">
             <?php
+
+            
+  
             
             $currentUser = $_SESSION['id'];
             $currentUserTown = $_SESSION['town'];
@@ -491,7 +522,7 @@ if (!empty($outputFrom->results[0]) && !empty($outputTo->results[0])) {
     $km = 2 * 6371 * asin(sqrt($inside));
     $miles = $km * 0.62137;
 
-    if ($miles <= 25) {
+    if ($miles <= $mileRadius) {
         // do something
     
 

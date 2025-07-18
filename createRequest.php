@@ -190,7 +190,7 @@ else{
                 
                         <!-- <td> -->
                         <div class="userInpPostGroup" id="sportGroup">   
-                            <label for="sport">Sport</label>
+                            <label for="sport" class="formLabels">Sport</label>
                             <input class="userInpPost" type="text" id="sport" name="sport" required placeholder="Select or start typing" onclick="showSportList()" onkeyup="filterSport()">
                             <div class="sportListCont">
                             <a value="Badminton" class="sportList">Badminton</a>
@@ -219,7 +219,7 @@ else{
                     
                         
                         <div class="userInpPostGroup">
-                            <label for="location">Location</label>
+                            <label for="location" class="formLabels">Location</label>
                             <input class="userInpPost" type="text" name="location" id="location" placeholder="Enter location" required>
                             <div id="suggestions"></div>
                         </div>
@@ -229,19 +229,19 @@ else{
                                 <!-- style="width: 100%;" -->
                                 <td style="width: 33%;">
                                     <div class="userInpPostGroup">
-                                        <label for="date">Date</label>
+                                        <label for="date" class="formLabels">Date</label>
                                         <input class="userInpPost" type="date" name="date" id="date" placeholder=none required>
                                     </div>
                                 </td>
                                 <td style="width: 33%;">
                                     <div class="userInpPostGroup">
-                                        <label for="time">Start Time</label>
+                                        <label for="time" class="formLabels">Start Time</label>
                                         <input class="userInpPost" type="time" name="time" id="time" required>
                                     </div>
                                 </td>
                                 <td style="width: 33%;">
                                     <div class="userInpPostGroup">
-                                        <label for="endTime">End Time</label>
+                                        <label for="endTime" class="formLabels">End Time</label>
                                         <input class="userInpPost" type="time" name="endTime" id="endTime" required>
                                     </div>
                                 </td>
@@ -252,7 +252,7 @@ else{
                     
                         
                         <div class="userInpPostGroup">
-                            <label for="skillLevel">Skill Level</label>
+                            <label for="skillLevel" class="formLabels">Skill Level</label>
                             <select class="userInpPost" name="skillLevel" id="skillLevel" required>
                                 <option value="1">Beginner</option>
                                 <option value="2">Intermediate</option>
@@ -264,12 +264,12 @@ else{
                     
                         
                         <div class="userInpPostGroup">
-                            <label for="peopleNeeded">People Needed</label>
+                            <label for="peopleNeeded" class="formLabels">People Needed</label>
                             <input type="number" class="userInpPost" name="peopleNeeded" id="peopleNeeded" min=1 required placeholder="Enter number">
                         </div>
                     
                         <div class="userInpPostGroup">
-                            <label for="ageRange">Age Range</label>
+                            <label for="ageRange" class="formLabels">Age Range</label>
                             <select name="ageRange" id="ageRange" class="userInpPost" required>
                                 <option value="15-20">15-20</option>
                                 <option value="20-30">20-30</option>
@@ -307,7 +307,7 @@ else{
                         </table>
 
                         <div class="userInpPostGroup">
-                            <h4>What will you bring?</h4>
+                            <h4 class="formLabels">What will you bring?</h4>
                             <div class="equipmentContainer"></div>
                             <input type="hidden" id="allEquipment" name="allEquipment">
                             <input type="hidden" id="allEquipmentChecked" name="allEquipmentChecked">
