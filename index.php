@@ -41,6 +41,9 @@
                     $_SESSION['age'] = $row['Age'];
                     $_SESSION['id'] = $row['Id'];
                     $_SESSION['town'] = $row['town'];
+                    if (isset($_SESSION['valid'])){
+                    header("Location: home.php");
+                }
                 }
                 else{
                     echo "<div class='message' style='
@@ -55,9 +58,7 @@
                         </div> <br>";
                         echo "<a href='index.php'><button class='btn'>Go Back</button></a>";
                 }
-                if (isset($_SESSION['valid'])){
-                    header("Location: home.php");
-                }
+                
             }
             else{
         ?>
