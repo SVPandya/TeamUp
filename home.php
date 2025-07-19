@@ -588,7 +588,7 @@ if (!empty($outputFrom->results[0]) && !empty($outputTo->results[0])) {
 
                     $equipmentList = explode(",", $row['equipment']);
                     if (count($equipmentList) > 0 && trim($row['equipment']) !== "") {
-                        echo "<p style='color: #858585;'><strong>Equipment:</strong></p>";
+                        echo "<p style='color: #858585;'><strong>Equipment Needed:</strong></p>";
                         foreach ($equipmentList as $equipmentPiece) {
                             // if (!str_contains($equipmentPiece, "_checked")){
                             $equipmentPiece = trim($equipmentPiece);

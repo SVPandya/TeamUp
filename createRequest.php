@@ -185,7 +185,7 @@ else{
             <td style="width: 50%; padding-bottom: 110px;">
         <div class="viewPosts">
             <!-- <h2 style="margin-top: 2%;">My Commitments</h2> -->
-            <h2 style="margin-top: 2%;">Create an Event</h2>
+            <h2 style="margin-top: 4%; margin-bottom: 4%;">Create an Event</h2>
             <form action="" method="post" id="postForm" class="popup-card">
                 
                         <!-- <td> -->
@@ -306,8 +306,8 @@ else{
                             </tr>
                         </table>
 
-                        <div class="userInpPostGroup">
-                            <h4 class="formLabels">What will you bring?</h4>
+                        <div class="userInpPostGroup" id="bringGroup">
+                            <!-- <h4 class="formLabels">What will you bring?</h4> -->
                             <div class="equipmentContainer"></div>
                             <input type="hidden" id="allEquipment" name="allEquipment">
                             <input type="hidden" id="allEquipmentChecked" name="allEquipmentChecked">

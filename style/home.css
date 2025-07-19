@@ -320,6 +320,10 @@ h3 {
     list-style-type: none;
     margin-right: 15px;
     text-align: center;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: #00000069;
+    color: white;
 }
 
 #map3d {
@@ -387,4 +391,16 @@ h3 {
 
 #mileRadius:hover {
     cursor: pointer;
+}
+
+.deleteButton {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.deleteButton:hover {
+    transform: translateY(-2px);
 }

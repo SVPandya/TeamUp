@@ -311,16 +311,18 @@ async function tryFetchWeather() {
                     console.log(`Precipitation Chance: ${precip}%`);
 
                     const gif = document.createElement('img');
-                    gif.src = 'icons8-sun.gif';
+                    // gif.src = 'icons8-sun.gif';
+                    gif.src = 'sun.gif';
                     if (precip >= 30) {
-                        gif.src = 'icons8-rain.gif';
+                        // gif.src = 'icons8-rain.gif';
+                        gif.src = 'rain.gif';
                     }
                     gif.alt = 'Chance of Rain';
                     gif.style.width = '50px';
                     gif.style.width = '50px';
                     const li = document.createElement("li");
                     li.classList.add("weatherList");
-                    li.innerHTML = `<b>${date}</b><br>${minTemp}°F - ${maxTemp}°F<br>${precip}% Rain<br>`;
+                    li.innerHTML = `<b>${date}</b><br>${maxTemp}°F<br><span style="color:   rgba(255, 255, 255, 0.71);">${minTemp}°F</span><br>${precip}% Rain<br>`;
                     li.appendChild(gif);
                     dailyWeather.appendChild(li);
 
@@ -364,10 +366,8 @@ function filterSport() {
 function updateCheckedEquipment() {
     equipment = [];
     document.querySelectorAll("input[name='equipment[]'").forEach(cb => {
-        if (!equipment.includes(cb.id)) {
-            equipment.push(cb.id);
+        equipment.push(cb.id);
 
-        }
     });
 
 
@@ -391,6 +391,9 @@ function updateCheckedEquipment() {
 
 
 function addEquip(event) {
+    const group = document.querySelector("#bringGroup");
+
+
     event.preventDefault();
     const equipmentInp = document.querySelector("#equipment");
     const equipmentContainer = document.querySelector(".equipmentContainer");
@@ -400,6 +403,15 @@ function addEquip(event) {
         equipmentInp.value = "";
     }
     console.log(equipment);
+    const text = document.createElement("h4");
+    text.id = "bringText";
+    text.innerText = "What will you bring?";
+    text.classList.add("formLabels");
+    text.style.display = "none";
+    equipmentContainer.appendChild(text);
+    if (equipment.length > 0) {
+        text.style.display = "block";
+    }
     equipment.forEach(equipmentPiece => {
         const wrapper = document.createElement("div");
         wrapper.style.display = "flex";
@@ -421,17 +433,38 @@ function addEquip(event) {
         checkboxLabel.textContent = equipmentPiece;
         checkboxLabel.style.margin = "3px";
 
+        const deleteBtn = document.createElement("button");
+        deleteBtn.innerHTML = "<img src='deleteIcon.png'>";
+        deleteBtn.classList.add("deleteButton");
+        deleteBtn.style.marginLeft = "10px";
+
+        deleteBtn.addEventListener("click", () => {
+            const index = equipment.indexOf(equipmentPiece);
+            if (index != -1) {
+                equipment.splice(index, 1);
+            }
+
+            const checkedIndex = checkedEquipment.indexOf(equipmentPiece);
+            if (checkedIndex != -1) {
+                console.log("found in checked items");
+                checkedEquipment.splice(checkedIndex, 1);
+                const checkedIndexEquipment = equipment.indexOf(equipmentPiece + "_checked");
+                equipment.splice(checkedIndexEquipment, 1);
+            }
+
+            if (equipment.length == 0) {
+                console.log("NOTHING");
+                text.style.display = "none";
+            }
+
+            wrapper.remove();
+        });
+
+
         wrapper.appendChild(checkbox);
         wrapper.appendChild(checkboxLabel);
+        wrapper.appendChild(deleteBtn);
         equipmentContainer.appendChild(wrapper);
 
     });
 }
-
-
-function testFunc() {
-    console.log("helo");
-}
-
-
-
