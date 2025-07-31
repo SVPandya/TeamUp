@@ -1,4 +1,7 @@
 # TeamUp
+## Demo
+[Demo Youtube Video](https://youtu.be/SMDJe9UAo84)
+## Get Started
 After downloading this repository, create a `.env` file in the base directory and add the following code:
 
 `GOOGLE_API_KEY = {API KEY}`
